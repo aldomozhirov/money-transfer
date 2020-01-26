@@ -1,38 +1,56 @@
 package com.aldomozhirov.moneytransfer.service;
 
-import com.aldomozhirov.moneytransfer.entities.User;
+import com.aldomozhirov.moneytransfer.dto.Account;
+import com.aldomozhirov.moneytransfer.dto.User;
+import com.aldomozhirov.moneytransfer.repository.AccountRepository;
+import com.aldomozhirov.moneytransfer.repository.UserAccountsRepository;
+import com.aldomozhirov.moneytransfer.repository.UserRepository;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Path("/user")
-@Produces(MediaType.APPLICATION_JSON)
 public class UserService {
 
-    @POST
-    @Path("/create")
+    private UserRepository userRepository;
+    private AccountRepository accountRepository;
+    private UserAccountsRepository userAccountsRepository;
+
+    public UserService(
+            UserRepository userRepository,
+            AccountRepository accountRepository,
+            UserAccountsRepository userAccountsRepository) {
+        this.userRepository = userRepository;
+        this.accountRepository = accountRepository;
+        this.userAccountsRepository = userAccountsRepository;
+    }
+
     public User createUser(User user) {
-        return null;
+        long id = userRepository.add(user);
+        user.setId(id);
+        return user;
     }
 
-    @DELETE
-    @Path("/{id}")
-    public Response deleteUser(User account) {
-        return null;
+    public boolean deleteUser(Long userId) {
+        return userRepository.remove(userId);
     }
 
-    @GET
-    @Path("/{id}")
-    public User getUserById(@PathParam("id") long id) {
-        return null;
+    public User getUser(Long userId) {
+        return userRepository.get(userId);
     }
 
-    @GET
-    @Path("/all")
     public List<User> getAllUsers() {
-        return null;
+        return userRepository.getAll();
+    }
+
+    public List<Account> getUserAccounts(Long userId) {
+        return userAccountsRepository
+                .getAll(userId).stream()
+                .map((accountId) -> accountRepository.get(accountId))
+                .collect(Collectors.toList());
+    }
+
+    public void assignAccountToUser(Long userId, Long accountId) {
+        userAccountsRepository.add(userId, accountId);
     }
 
 }

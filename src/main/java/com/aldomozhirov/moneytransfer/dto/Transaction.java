@@ -1,4 +1,4 @@
-package com.aldomozhirov.moneytransfer.entities;
+package com.aldomozhirov.moneytransfer.dto;
 
 public class Transaction {
 

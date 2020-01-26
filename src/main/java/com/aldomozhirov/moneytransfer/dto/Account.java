@@ -1,4 +1,4 @@
-package com.aldomozhirov.moneytransfer.entities;
+package com.aldomozhirov.moneytransfer.dto;
 
 public class Account {
 
@@ -9,6 +9,18 @@ public class Account {
     public Account(Long id, Long userId, Double balance) {
         this.id = id;
         this.userId = userId;
+        this.balance = balance;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 

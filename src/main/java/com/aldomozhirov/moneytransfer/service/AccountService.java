@@ -1,62 +1,63 @@
 package com.aldomozhirov.moneytransfer.service;
 
-import com.aldomozhirov.moneytransfer.entities.Account;
+import com.aldomozhirov.moneytransfer.dto.Account;
+import com.aldomozhirov.moneytransfer.dto.Transaction;
+import com.aldomozhirov.moneytransfer.repository.AccountRepository;
+import com.aldomozhirov.moneytransfer.repository.AccountTransactionsRepository;
+import com.aldomozhirov.moneytransfer.repository.TransactionRepository;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Path("/account")
-@Produces(MediaType.APPLICATION_JSON)
 public class AccountService {
 
-    @POST
-    @Path("/create")
+    private AccountRepository accountRepository;
+    private TransactionRepository transactionRepository;
+    private AccountTransactionsRepository accountTransactionsRepository;
+
+    public AccountService(AccountRepository accountRepository,
+                          TransactionRepository transactionRepository,
+                          AccountTransactionsRepository accountTransactionsRepository) {
+        this.accountRepository = accountRepository;
+        this.transactionRepository = transactionRepository;
+        this.accountTransactionsRepository = accountTransactionsRepository;
+    }
+
     public Account createAccount(Account account) {
-        return null;
+        long id = accountRepository.add(account);
+        account.setId(id);
+        return account;
     }
 
-    @DELETE
-    @Path("/{id}")
-    public Response deleteAccount(Account account) {
-        return null;
+    public boolean deleteAccount(Long accountId) {
+        return accountRepository.remove(accountId);
     }
 
-    @GET
-    @Path("/all")
     public List<Account> getAllAccounts() {
-        return null;
+        return accountRepository.getAll();
     }
 
-    @GET
-    @Path("/{id}")
-    public Account getAccountById(@PathParam("id") long id) {
-        return null;
+    public Account getAccountById(Long accountId) {
+        return accountRepository.get(accountId);
     }
 
-    @GET
-    @Path("/user/{id}")
-    public List<Account> getAccountsByUserId(@PathParam("id") long id) {
-        return null;
+    public Double getAccountBalance(Long accountId) {
+        return accountRepository.get(accountId).getBalance();
     }
 
-    @GET
-    @Path("/{id}/balance")
-    public Double getAccountBalance(@PathParam("id") long id) {
-        return null;
+    public List<Transaction> getAccountTransactions(Long accountId) {
+        return accountTransactionsRepository
+                .getAll(accountId).stream()
+                .map((transactionId) -> transactionRepository.get(transactionId))
+                .collect(Collectors.toList());
     }
 
-    @PUT
-    @Path("/{id}/withdraw/{amount}")
-    public Response withdraw(@PathParam("id") long id, @PathParam("amount") long amount) {
-        return null;
+    public void withdrawAmountFromAccount(Long accountId, Long amount) {
+        //TODO
     }
 
-    @PUT
-    @Path("/{id}/deposit/{deposit}")
-    public Response deposit(@PathParam("id") long id, @PathParam("deposit") long deposit) {
-        return null;
+    public void depositAmountToAccount(Long accountId, Long amount) {
+        //TODO
     }
 
 }

@@ -1,4 +1,4 @@
-package com.aldomozhirov.moneytransfer.entities;
+package com.aldomozhirov.moneytransfer.dto;
 
 public class User {
 
@@ -9,6 +9,18 @@ public class User {
     public User(Long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
