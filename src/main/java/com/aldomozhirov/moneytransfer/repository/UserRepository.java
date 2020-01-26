@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface UserRepository {
 
-    long add(User user);
+    Long add(User user);
 
-    boolean remove(Long id);
+    void remove(Long id);
 
     User get(Long id);
 

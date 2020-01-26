@@ -6,7 +6,7 @@ public interface UserAccountsRepository {
 
     void add(Long userId, Long accountId);
 
-    boolean remove(Long userId, Long accountId);
+    void remove(Long userId, Long accountId);
 
     List<Long> getAll(Long userId);
 

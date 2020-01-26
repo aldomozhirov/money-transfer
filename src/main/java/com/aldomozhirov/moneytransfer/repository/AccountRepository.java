@@ -8,9 +8,9 @@ public interface AccountRepository {
 
     long add(Account account);
 
-    boolean remove(Long id);
+    void remove(Long id);
 
-    boolean update(Account account);
+    void update(Account account);
 
     Account get(Long id);
 

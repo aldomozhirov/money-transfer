@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface TransactionRepository {
 
-    long add(Transaction user);
+    Long add(Transaction transaction);
 
-    Transaction get(long id);
+    Transaction get(Long id);
 
     List<Transaction> getAll();
 
