@@ -3,7 +3,6 @@ package com.aldomozhirov.moneytransfer;
 import com.aldomozhirov.moneytransfer.controller.AccountController;
 import com.aldomozhirov.moneytransfer.controller.TransactionController;
 import com.aldomozhirov.moneytransfer.controller.UserController;
-import com.aldomozhirov.moneytransfer.repository.impl.RepositoryFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -37,7 +36,9 @@ public class MoneyTransferApp {
         ServletHolder servletHolder = context.addServlet(ServletContainer.class, "/*");
         servletHolder.setInitParameter(
                 "jersey.config.server.provider.classnames",
-                controllers.stream().map(Object::toString).collect(Collectors.joining(",")));
+                controllers.stream().map(Object::toString).collect(Collectors.joining(","))
+        );
+        server.start();
     }
 
 }

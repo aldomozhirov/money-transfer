@@ -29,9 +29,7 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        long id = repositoryFactory.getUserRepository().add(user);
-        user.setId(id);
-        return user;
+        return repositoryFactory.getUserRepository().add(user);
     }
 
     public void deleteUser(Long userId) {

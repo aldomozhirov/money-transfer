@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AccountRepository {
 
-    long add(Account account);
+    Account add(Account account);
 
     void remove(Long id);
 

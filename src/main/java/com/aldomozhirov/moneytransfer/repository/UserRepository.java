@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserRepository {
 
-    Long add(User user);
+    User add(User user);
 
     void remove(Long id);
 

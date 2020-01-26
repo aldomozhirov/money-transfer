@@ -26,10 +26,9 @@ public class AccountService {
     }
 
     public Account createAccount(Account account) {
-        Long accountId = repositoryFactory.getAccountRepository().add(account);
-        RepositoryFactory.getInstance().getUserAccountsRepository().add(account.getUserId(), accountId);
-        account.setId(accountId);
-        return account;
+        Account createdAccount = repositoryFactory.getAccountRepository().add(account);
+        repositoryFactory.getUserAccountsRepository().add(account.getUserId(), createdAccount.getId());
+        return createdAccount;
     }
 
     public void deleteAccount(Long accountId) {

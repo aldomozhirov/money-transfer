@@ -32,9 +32,7 @@ public class TransactionService {
         Account target = accountRepository.get(transaction.getTargetAccountId());
         source.setBalance(source.getBalance() - transaction.getAmount());
         target.setBalance(target.getBalance() - transaction.getAmount());
-        Long id = transactionRepository.add(transaction);
-        transaction.setId(id);
-        return transaction;
+        return transactionRepository.add(transaction);
     }
 
     public List<Transaction> getAllTransactions() {
