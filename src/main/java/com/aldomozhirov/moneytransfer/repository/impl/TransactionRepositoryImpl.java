@@ -1,6 +1,7 @@
 package com.aldomozhirov.moneytransfer.repository.impl;
 
 import com.aldomozhirov.moneytransfer.dto.Transaction;
+import com.aldomozhirov.moneytransfer.exception.RepositoryException;
 import com.aldomozhirov.moneytransfer.repository.TransactionRepository;
 
 import java.util.ArrayList;
@@ -36,14 +37,35 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
     @Override
     public List<Transaction> getBySourceAccountId(Long sourceAccountId) {
-        //TODO
-        return null;
+        List<Transaction> transactions = new ArrayList<>();
+        for(Transaction transaction : transactionMap.values()) {
+            if (transaction.getSourceAccountId().equals(sourceAccountId)) {
+                transactions.add(transaction);
+            }
+        }
+        return transactions;
     }
 
     @Override
     public List<Transaction> getByTargetAccountId(Long targetAccountId) {
-        //TODO
-        return null;
+        List<Transaction> transactions = new ArrayList<>();
+        for(Transaction transaction : transactionMap.values()) {
+            if (transaction.getSourceAccountId().equals(targetAccountId)) {
+                transactions.add(transaction);
+            }
+        }
+        return transactions;
+    }
+
+    @Override
+    public List<Transaction> getByAccountId(Long accountId) throws RepositoryException {
+        List<Transaction> transactions = new ArrayList<>();
+        for(Transaction transaction : transactionMap.values()) {
+            if (transaction.getSourceAccountId().equals(accountId) || transaction.getTargetAccountId().equals(accountId)) {
+                transactions.add(transaction);
+            }
+        }
+        return transactions;
     }
 
     @Override

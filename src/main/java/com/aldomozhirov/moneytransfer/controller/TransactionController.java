@@ -33,41 +33,40 @@ public class TransactionController {
         return TransactionService.getInstance().getTransactionById(id);
     }
 
-
     @GET
-    @Path("/user/{id}")
-    public List<Transaction> getAllTransactionsByAccountId(@PathParam("id") Long userId) throws NoSuchIdException, RepositoryException {
-        return UserService.getInstance().getUserTransactions(userId);
+    @Path("/account/{id}")
+    public List<Transaction> getAllTransactionsByAccountId(@PathParam("id") Long accountId) throws NoSuchIdException, RepositoryException {
+        return TransactionService.getInstance().getTransactionsByAccount(accountId);
     }
 
     @GET
-    @Path("/user/{id}/income")
+    @Path("/account/{id}/income")
     public List<Transaction> getIncomeTransactionsByAccountId(@PathParam("id") Long accountId) throws NoSuchIdException, RepositoryException {
-        return AccountService.getInstance().getAccountTransactions(accountId);
+        return TransactionService.getInstance().getIncomeTransactionsByAccount(accountId);
     }
 
     @GET
-    @Path("/user/{id}/outcome")
+    @Path("/account/{id}/outcome")
     public List<Transaction> getOutcomeTransactionsByAccountId(@PathParam("id") Long accountId) throws NoSuchIdException, RepositoryException {
-        return AccountService.getInstance().getAccountTransactions(accountId);
+        return TransactionService.getInstance().getOutcomeTransactionsByAccount(accountId);
     }
 
     @GET
     @Path("/user/{id}")
     public List<Transaction> getAllTransactionsByUserId(@PathParam("id") Long userId) throws NoSuchIdException, RepositoryException {
-        return UserService.getInstance().getUserTransactions(userId);
+        return TransactionService.getInstance().getTransactionsByUser(userId);
     }
 
     @GET
     @Path("/user/{id}/income")
-    public List<Transaction> getIncomeTransactionsByUserId(@PathParam("id") Long accountId) throws NoSuchIdException, RepositoryException {
-        return AccountService.getInstance().getAccountTransactions(accountId);
+    public List<Transaction> getIncomeTransactionsByUserId(@PathParam("id") Long userId) throws NoSuchIdException, RepositoryException {
+        return TransactionService.getInstance().getIncomeTransactionsByUser(userId);
     }
 
     @GET
     @Path("/user/{id}/outcome")
-    public List<Transaction> getOutcomeTransactionsByUserId(@PathParam("id") Long accountId) throws NoSuchIdException, RepositoryException {
-        return AccountService.getInstance().getAccountTransactions(accountId);
+    public List<Transaction> getOutcomeTransactionsByUserId(@PathParam("id") Long userId) throws NoSuchIdException, RepositoryException {
+        return TransactionService.getInstance().getOutcomeTransactionsByUser(userId);
     }
 
 }

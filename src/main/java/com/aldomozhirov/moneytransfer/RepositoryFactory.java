@@ -36,5 +36,4 @@ public class RepositoryFactory {
         return transactionRepository;
     }
 
-
 }

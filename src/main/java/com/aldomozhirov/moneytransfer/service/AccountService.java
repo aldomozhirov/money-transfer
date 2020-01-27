@@ -1,14 +1,11 @@
 package com.aldomozhirov.moneytransfer.service;
 
+import com.aldomozhirov.moneytransfer.RepositoryFactory;
 import com.aldomozhirov.moneytransfer.dto.Account;
-import com.aldomozhirov.moneytransfer.dto.Transaction;
 import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
-import com.aldomozhirov.moneytransfer.repository.*;
-import com.aldomozhirov.moneytransfer.RepositoryFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AccountService {
 
@@ -28,15 +25,13 @@ public class AccountService {
     }
 
     public Account createAccount(Account account) throws RepositoryException, NoSuchIdException {
-        Account createdAccount = repositoryFactory.getAccountRepository().add(account);
         if (!repositoryFactory.getUserRepository().isExists(account.getUserId())) {
             throw new NoSuchIdException(String.format(
                     "Unable to create account for user with id=%d cause such user does not exists",
                     account.getUserId())
             );
         }
-        repositoryFactory.getUserAccountsRepository().add(account.getUserId(), createdAccount.getId());
-        return createdAccount;
+        return repositoryFactory.getAccountRepository().add(account);
     }
 
     public void deleteAccount(Long accountId) throws NoSuchIdException, RepositoryException {
@@ -53,7 +48,7 @@ public class AccountService {
     }
 
     public Account getAccountById(Long accountId) throws NoSuchIdException, RepositoryException {
-        Account account = repositoryFactory.getAccountRepository().get(accountId);
+        Account account = repositoryFactory.getAccountRepository().getById(accountId);
         if (account == null) {
             throw new NoSuchIdException(String.format(
                     "Cannot find account with id=%d",
@@ -63,8 +58,18 @@ public class AccountService {
         return account;
     }
 
+    public List<Account> getAccountsByUser(Long userId) throws NoSuchIdException, RepositoryException {
+        if (!repositoryFactory.getUserRepository().isExists(userId)) {
+            throw new NoSuchIdException(String.format(
+                    "Unable to get accounts of user with id=%d cause such user does not exists",
+                    userId)
+            );
+        }
+        return repositoryFactory.getAccountRepository().getByUserId(userId);
+    }
+
     public Double getAccountBalance(Long accountId) throws NoSuchIdException, RepositoryException {
-        Account account = repositoryFactory.getAccountRepository().get(accountId);
+        Account account = repositoryFactory.getAccountRepository().getById(accountId);
         if (account == null) {
             throw new NoSuchIdException(String.format(
                     "Unable to get current balance on account with id=%d cause such account does not exists",
@@ -72,24 +77,6 @@ public class AccountService {
             );
         }
         return account.getBalance();
-    }
-
-    public List<Transaction> getAccountTransactions(Long accountId) throws NoSuchIdException, RepositoryException {
-        Account account = repositoryFactory.getAccountRepository().get(accountId);
-        if (account == null) {
-            throw new NoSuchIdException();
-        }
-        TransactionRepository transactionRepository = repositoryFactory.getTransactionRepository();
-        return repositoryFactory.getAccountTransactionsRepository()
-                .getAll(accountId).stream()
-                .map(id -> {
-                    try {
-                        return transactionRepository.get(id);
-                    } catch (RepositoryException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
     }
 
 }

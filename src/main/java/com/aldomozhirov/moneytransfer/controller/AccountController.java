@@ -10,7 +10,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Path("/account")
 @Produces(MediaType.APPLICATION_JSON)
@@ -44,27 +43,13 @@ public class AccountController {
     @GET
     @Path("/user/{id}")
     public List<Account> getAccountsByUserId(@PathParam("id") long id) throws NoSuchIdException, RepositoryException {
-        return UserService.getInstance().getUserAccounts(id);
+        return AccountService.getInstance().getAccountsByUser(id);
     }
 
     @GET
     @Path("/{id}/balance")
     public Double getAccountBalance(@PathParam("id") long id) throws NoSuchIdException, RepositoryException {
         return AccountService.getInstance().getAccountBalance(id);
-    }
-
-    @PUT
-    @Path("/{id}/withdraw/{amount}")
-    public Response withdraw(@PathParam("id") long id, @PathParam("amount") long amount) {
-        //TODO
-        return null;
-    }
-
-    @PUT
-    @Path("/{id}/deposit/{deposit}")
-    public Response deposit(@PathParam("id") long id, @PathParam("deposit") long deposit) {
-        //TODO
-        return null;
     }
 
 }

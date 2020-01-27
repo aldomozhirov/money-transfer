@@ -50,8 +50,13 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     public List<Account> getByUserId(Long userId) {
-        //TODO
-        return null;
+        List<Account> accounts = new ArrayList<>();
+        for(Account account : accountMap.values()) {
+            if (account.getUserId().equals(userId)) {
+                accounts.add(account);
+            }
+        }
+        return accounts;
     }
 
     @Override
