@@ -17,7 +17,7 @@ public class IncorrectInputDataException extends Exception implements ExceptionM
 
     @Override
     public Response toResponse(IncorrectInputDataException exception) {
-        return Response.status(404).entity(exception.getMessage())
+        return Response.status(400).entity(exception.getMessage())
                 .type("text/plain").build();
     }
 

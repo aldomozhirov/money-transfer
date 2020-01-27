@@ -2,14 +2,14 @@ package com.aldomozhirov.moneytransfer.controller;
 
 import com.aldomozhirov.moneytransfer.dto.Account;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
 
 public class AccountControllerTest extends AbstractControllerTest {
@@ -26,12 +26,16 @@ public class AccountControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDeleteAccount() throws IOException, URISyntaxException {
-        //TODO
+        HttpResponse response = getRequest("/account/4");
+        int statusCode = response.getStatusLine().getStatusCode();
+        Assert.assertEquals(200, statusCode);
     }
 
     @Test
     public void testDeleteNotExistingAccount() throws IOException, URISyntaxException {
-        //TODO
+        HttpResponse response = getRequest("/account/5");
+        int statusCode = response.getStatusLine().getStatusCode();
+        Assert.assertEquals(400, statusCode);
     }
 
     @Test
@@ -66,14 +70,12 @@ public class AccountControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetAllAccounts() throws IOException, URISyntaxException {
-        URI uri = builder.setPath("/account/all").build();
-        HttpGet request = new HttpGet(uri);
-        HttpResponse response = client.execute(request);
+        HttpResponse response = getRequest("/account/all");
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(200, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         Account[] accounts = mapper.readValue(jsonString, Account[].class);
-        assertEquals(0, accounts.length);
+        assertTrue(accounts.length > 0);
     }
 
 }

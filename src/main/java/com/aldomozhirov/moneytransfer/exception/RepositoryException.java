@@ -18,7 +18,7 @@ public class RepositoryException extends Exception implements ExceptionMapper<Re
     @Override
     public Response toResponse(RepositoryException exception)
     {
-        return Response.status(404).entity(exception.getMessage())
+        return Response.status(400).entity(exception.getMessage())
                 .type("text/plain").build();
     }
 

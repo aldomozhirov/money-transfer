@@ -18,7 +18,7 @@ public class NotEnoughMoneyException extends Exception implements ExceptionMappe
     @Override
     public Response toResponse(NotEnoughMoneyException exception)
     {
-        return Response.status(404).entity(exception.getMessage())
+        return Response.status(400).entity(exception.getMessage())
                 .type("text/plain").build();
     }
 

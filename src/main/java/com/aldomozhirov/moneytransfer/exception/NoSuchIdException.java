@@ -18,7 +18,7 @@ public class NoSuchIdException extends Exception implements ExceptionMapper<NoSu
     @Override
     public Response toResponse(NoSuchIdException exception)
     {
-        return Response.status(404).entity(exception.getMessage())
+        return Response.status(400).entity(exception.getMessage())
                 .type("text/plain").build();
     }
 
