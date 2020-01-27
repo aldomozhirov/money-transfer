@@ -15,13 +15,107 @@ import static junit.framework.TestCase.assertEquals;
 public class TransactionControllerTest extends AbstractControllerTest {
 
     @Test
+    public void testPerformTransaction() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testPerformTransactionWithNegativeAmount() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testPerformTransactionWithIncorrectSourceAccountId() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testPerformTransactionWithIncorrectTargetAccountId() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testPerformTransactionWithInsufficientFundsOnSourceAccount() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetTransactionById() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetTransactionByIncorrectId() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetTransactionsByAccount() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetTransactionsByNotExistingAccount() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetTransactionsByUser() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetTransactionsByNotExistingUser() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetOutcomeTransactionsByAccount() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetOutcomeTransactionsByNotExistingAccount() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetOutcomeTransactionsByUser() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetOutcomeTransactionsByNotExistingUser() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetIncomeTransactionsByAccount() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetIncomeTransactionsByNotExistingAccount() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetIncomeTransactionsByUser() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetIncomeTransactionsByNotExistingUser() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
     public void testGetAllTransactions() throws IOException, URISyntaxException {
         URI uri = builder.setPath("/transaction/all").build();
         HttpGet request = new HttpGet(uri);
         HttpResponse response = client.execute(request);
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(200, statusCode);
-        //check the content
         String jsonString = EntityUtils.toString(response.getEntity());
         Transaction[] transactions = mapper.readValue(jsonString, Transaction[].class);
         assertEquals(0, transactions.length);

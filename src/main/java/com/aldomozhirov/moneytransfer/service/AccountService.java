@@ -43,10 +43,6 @@ public class AccountService {
         }
     }
 
-    public List<Account> getAllAccounts() throws RepositoryException {
-        return repositoryFactory.getAccountRepository().getAll();
-    }
-
     public Account getAccountById(Long accountId) throws NoSuchIdException, RepositoryException {
         Account account = repositoryFactory.getAccountRepository().getById(accountId);
         if (account == null) {
@@ -77,6 +73,10 @@ public class AccountService {
             );
         }
         return account.getBalance();
+    }
+
+    public List<Account> getAllAccounts() throws RepositoryException {
+        return repositoryFactory.getAccountRepository().getAll();
     }
 
 }

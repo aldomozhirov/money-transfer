@@ -3,6 +3,7 @@ package com.aldomozhirov.moneytransfer.service;
 import com.aldomozhirov.moneytransfer.RepositoryFactory;
 import com.aldomozhirov.moneytransfer.dto.Account;
 import com.aldomozhirov.moneytransfer.dto.Transaction;
+import com.aldomozhirov.moneytransfer.exception.IncorrectInputDataException;
 import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
 import com.aldomozhirov.moneytransfer.exception.NotEnoughMoneyException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
@@ -29,7 +30,10 @@ public class TransactionService {
         return instance;
     }
 
-    public Transaction performTransaction(Transaction transaction) throws NoSuchIdException, NotEnoughMoneyException, RepositoryException {
+    public Transaction performTransaction(Transaction transaction) throws IncorrectInputDataException, NoSuchIdException, NotEnoughMoneyException, RepositoryException {
+        if(transaction.getAmount() < 0) {
+            throw new IncorrectInputDataException("Transaction amount have to be grater than 0");
+        }
         AccountRepository accountRepository = repositoryFactory.getAccountRepository();
         TransactionRepository transactionRepository = repositoryFactory.getTransactionRepository();
         Account source = accountRepository.getById(transaction.getSourceAccountId());
@@ -63,10 +67,6 @@ public class TransactionService {
                     transactionId));
         }
         return transaction;
-    }
-
-    public List<Transaction> getAllTransactions() throws RepositoryException {
-        return repositoryFactory.getTransactionRepository().getAll();
     }
 
     public List<Transaction> getTransactionsByAccount(Long accountId) throws NoSuchIdException, RepositoryException {
@@ -157,6 +157,10 @@ public class TransactionService {
                     }
                 })
                 .collect(Collectors.toList());
+    }
+
+    public List<Transaction> getAllTransactions() throws RepositoryException {
+        return repositoryFactory.getTransactionRepository().getAll();
     }
 
 }

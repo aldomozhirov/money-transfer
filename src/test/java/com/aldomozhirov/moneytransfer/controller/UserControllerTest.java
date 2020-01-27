@@ -11,8 +11,34 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class UserControllerTest extends AbstractControllerTest {
+
+    @Test
+    public void testCreateUser() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testDeleteUser() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testDeleteNotExistingUser() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetUserById() throws IOException, URISyntaxException {
+        //TODO
+    }
+
+    @Test
+    public void testGetUserByIncorrectId() throws IOException, URISyntaxException {
+        //TODO
+    }
 
     @Test
     public void testGetAllUsers() throws IOException, URISyntaxException {
@@ -21,10 +47,9 @@ public class UserControllerTest extends AbstractControllerTest {
         HttpResponse response = client.execute(request);
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(200, statusCode);
-        //check the content
         String jsonString = EntityUtils.toString(response.getEntity());
         User[] users = mapper.readValue(jsonString, User[].class);
-        assertEquals(0, users.length);
+        assertNotEquals(0, users.length);
     }
 
 }
