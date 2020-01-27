@@ -33,11 +33,21 @@ public class TransactionService {
         TransactionRepository transactionRepository = repositoryFactory.getTransactionRepository();
         Account source = accountRepository.get(transaction.getSourceAccountId());
         Account target = accountRepository.get(transaction.getTargetAccountId());
-        if (source == null || target == null) {
-            throw new NoSuchIdException();
+        if (source == null) {
+            throw new NoSuchIdException(String.format(
+                    "Cannot find source account with id=%d specified in transaction",
+                    transaction.getSourceAccountId()));
+        }
+        if (target == null) {
+            throw new NoSuchIdException(String.format(
+                    "Cannot find target account with id=%d specified in transaction",
+                    transaction.getTargetAccountId()));
         }
         if (source.getBalance() - transaction.getAmount() < 0) {
-            throw new NotEnoughMoneyException();
+            throw new NotEnoughMoneyException(String.format(
+                    "Not enough money to perform the transaction on the source account with id=%d",
+                    transaction.getSourceAccountId())
+            );
         }
         source.setBalance(source.getBalance() - transaction.getAmount());
         target.setBalance(target.getBalance() - transaction.getAmount());
@@ -48,10 +58,12 @@ public class TransactionService {
         return repositoryFactory.getTransactionRepository().getAll();
     }
 
-    public Transaction getTransactionById(long id) throws NoSuchIdException, RepositoryException {
-        Transaction transaction = repositoryFactory.getTransactionRepository().get(id);
+    public Transaction getTransactionById(long transactionId) throws NoSuchIdException, RepositoryException {
+        Transaction transaction = repositoryFactory.getTransactionRepository().get(transactionId);
         if (transaction == null) {
-            throw new NoSuchIdException();
+            throw new NoSuchIdException(String.format(
+                    "Cannot find transaction with id=%d",
+                    transactionId));
         }
         return transaction;
     }

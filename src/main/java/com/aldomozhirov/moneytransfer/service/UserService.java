@@ -34,14 +34,20 @@ public class UserService {
 
     public void deleteUser(Long userId) throws NoSuchIdException, RepositoryException {
         if (!repositoryFactory.getUserRepository().remove(userId)) {
-            throw new NoSuchIdException();
+            throw new NoSuchIdException(String.format(
+                    "Unable to delete user with id=%d cause such user does not exists",
+                    userId)
+            );
         }
     }
 
     public User getUser(Long userId) throws NoSuchIdException, RepositoryException {
         User user = repositoryFactory.getUserRepository().get(userId);
         if (user == null) {
-            throw new NoSuchIdException();
+            throw new NoSuchIdException(String.format(
+                    "Cannot find user with id=%d",
+                    userId)
+            );
         }
         return user;
     }
@@ -52,7 +58,10 @@ public class UserService {
 
     public List<Account> getUserAccounts(Long userId) throws NoSuchIdException, RepositoryException {
         if (!repositoryFactory.getUserRepository().isExists(userId)) {
-            throw new NoSuchIdException();
+            throw new NoSuchIdException(String.format(
+                    "Unable to get accounts of user with id=%d cause such user does not exists",
+                    userId)
+            );
         }
         AccountRepository accountRepository = repositoryFactory.getAccountRepository();
         return repositoryFactory.getUserAccountsRepository()
@@ -69,7 +78,10 @@ public class UserService {
 
     public List<Transaction> getUserTransactions(Long userId) throws NoSuchIdException, RepositoryException {
         if (!repositoryFactory.getUserRepository().isExists(userId)) {
-            throw new NoSuchIdException();
+            throw new NoSuchIdException(String.format(
+                    "Unable to get transactions of user with id=%d cause such user does not exists",
+                    userId)
+            );
         }
         AccountTransactionsRepository accountTransactionsRepository = repositoryFactory.getAccountTransactionsRepository();
         TransactionRepository transactionRepository = repositoryFactory.getTransactionRepository();

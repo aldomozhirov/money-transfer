@@ -30,7 +30,10 @@ public class AccountService {
     public Account createAccount(Account account) throws RepositoryException, NoSuchIdException {
         Account createdAccount = repositoryFactory.getAccountRepository().add(account);
         if (!repositoryFactory.getUserRepository().isExists(account.getUserId())) {
-            throw new NoSuchIdException();
+            throw new NoSuchIdException(String.format(
+                    "Unable to create account for user with id=%d cause such user does not exists",
+                    account.getUserId())
+            );
         }
         repositoryFactory.getUserAccountsRepository().add(account.getUserId(), createdAccount.getId());
         return createdAccount;
@@ -38,7 +41,10 @@ public class AccountService {
 
     public void deleteAccount(Long accountId) throws NoSuchIdException, RepositoryException {
         if (!repositoryFactory.getAccountRepository().remove(accountId)) {
-            throw new NoSuchIdException();
+            throw new NoSuchIdException(String.format(
+                    "Unable to delete account with id=%d cause such account does not exists",
+                    accountId)
+            );
         }
     }
 
@@ -49,7 +55,10 @@ public class AccountService {
     public Account getAccountById(Long accountId) throws NoSuchIdException, RepositoryException {
         Account account = repositoryFactory.getAccountRepository().get(accountId);
         if (account == null) {
-            throw new NoSuchIdException();
+            throw new NoSuchIdException(String.format(
+                    "Cannot find account with id=%d",
+                    accountId)
+            );
         }
         return account;
     }
@@ -57,7 +66,10 @@ public class AccountService {
     public Double getAccountBalance(Long accountId) throws NoSuchIdException, RepositoryException {
         Account account = repositoryFactory.getAccountRepository().get(accountId);
         if (account == null) {
-            throw new NoSuchIdException();
+            throw new NoSuchIdException(String.format(
+                    "Unable to get current balance on account with id=%d cause such account does not exists",
+                    accountId)
+            );
         }
         return account.getBalance();
     }
