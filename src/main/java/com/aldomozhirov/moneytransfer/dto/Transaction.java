@@ -1,14 +1,30 @@
 package com.aldomozhirov.moneytransfer.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Transaction {
 
+    @JsonIgnore
     private Long id;
+
+    @JsonProperty(required = true)
     private Long sourceAccountId;
+
+    @JsonProperty(required = true)
     private Long targetAccountId;
+
+    @JsonProperty(required = true)
     private Double amount;
 
     public Transaction(Long id, Long sourceAccountId, Long targetAccountId, Double amount) {
         this.id = id;
+        this.sourceAccountId = sourceAccountId;
+        this.targetAccountId = targetAccountId;
+        this.amount = amount;
+    }
+
+    public Transaction(Long sourceAccountId, Long targetAccountId, Double amount) {
         this.sourceAccountId = sourceAccountId;
         this.targetAccountId = targetAccountId;
         this.amount = amount;

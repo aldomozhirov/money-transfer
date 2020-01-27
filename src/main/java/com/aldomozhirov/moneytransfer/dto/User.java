@@ -1,10 +1,26 @@
 package com.aldomozhirov.moneytransfer.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class User {
 
+    @JsonIgnore
     private Long id;
+
+    @JsonProperty(required = true)
     private String firstName;
+
+    @JsonProperty(required = true)
     private String lastName;
+
+    public User() {}
+
+    public User(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
 
     public User(Long id, String firstName, String lastName) {
         this.id = id;

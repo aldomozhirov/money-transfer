@@ -29,6 +29,11 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
+    public boolean isExists(Long id) {
+        return accountMap.containsKey(id);
+    }
+
+    @Override
     public Account update(Long id, Account account) {
         if (!accountMap.containsKey(id)) {
             return null;

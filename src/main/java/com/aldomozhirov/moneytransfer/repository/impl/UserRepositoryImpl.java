@@ -38,6 +38,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public boolean isExists(Long id) {
+        return userMap.containsKey(id);
+    }
+
+    @Override
     public User get(Long id) {
         return userMap.get(id);
     }

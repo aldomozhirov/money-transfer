@@ -24,6 +24,11 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
+    public boolean isExists(Long id) {
+        return transactionMap.containsKey(id);
+    }
+
+    @Override
     public Transaction get(Long id) {
         return transactionMap.get(id);
     }

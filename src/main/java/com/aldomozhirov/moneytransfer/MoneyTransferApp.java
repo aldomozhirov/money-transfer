@@ -14,13 +14,7 @@ import java.util.stream.Collectors;
 
 public class MoneyTransferApp {
 
-    private static List<String> controllers;
-
     public static void main(String[] args) {
-        controllers = new ArrayList<>();
-        controllers.add(AccountController.class.getCanonicalName());
-        controllers.add(TransactionController.class.getCanonicalName());
-        controllers.add(UserController.class.getCanonicalName());
         try {
             startServer();
         } catch (Exception e) {
@@ -28,7 +22,13 @@ public class MoneyTransferApp {
         }
     }
 
-    private static void startServer() throws Exception {
+    public static void startServer() throws Exception {
+
+        List<String> controllers = new ArrayList<>();
+        controllers.add(AccountController.class.getCanonicalName());
+        controllers.add(TransactionController.class.getCanonicalName());
+        controllers.add(UserController.class.getCanonicalName());
+
         Server server = new Server(8080);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
@@ -39,6 +39,7 @@ public class MoneyTransferApp {
                 controllers.stream().map(Object::toString).collect(Collectors.joining(","))
         );
         server.start();
+
     }
 
 }
