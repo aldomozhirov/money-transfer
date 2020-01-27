@@ -14,15 +14,17 @@ import java.util.stream.Collectors;
 
 public class MoneyTransferApp {
 
+    private static RepositoryFactory repositoryFactory;
+
     public static void main(String[] args) {
         try {
-            startServer();
+            start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void startServer() throws Exception {
+    public static void start() throws Exception {
 
         List<String> controllers = new ArrayList<>();
         controllers.add(AccountController.class.getCanonicalName());
@@ -40,6 +42,12 @@ public class MoneyTransferApp {
         );
         server.start();
 
+        repositoryFactory = RepositoryFactory.getInstance();
+
+    }
+
+    public static RepositoryFactory getRepositoryFactory() {
+        return repositoryFactory;
     }
 
 }

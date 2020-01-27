@@ -15,6 +15,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     public UserRepositoryImpl() {
         userMap = new HashMap<>();
+        increment = 0L;
     }
 
     @Override

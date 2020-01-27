@@ -7,7 +7,7 @@ import com.aldomozhirov.moneytransfer.exception.NotEnoughMoneyException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
 import com.aldomozhirov.moneytransfer.repository.AccountRepository;
 import com.aldomozhirov.moneytransfer.repository.TransactionRepository;
-import com.aldomozhirov.moneytransfer.repository.impl.RepositoryFactory;
+import com.aldomozhirov.moneytransfer.RepositoryFactory;
 
 import java.util.List;
 

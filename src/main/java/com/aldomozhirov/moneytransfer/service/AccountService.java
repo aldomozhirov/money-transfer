@@ -5,7 +5,7 @@ import com.aldomozhirov.moneytransfer.dto.Transaction;
 import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
 import com.aldomozhirov.moneytransfer.repository.*;
-import com.aldomozhirov.moneytransfer.repository.impl.RepositoryFactory;
+import com.aldomozhirov.moneytransfer.RepositoryFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;

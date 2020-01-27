@@ -15,6 +15,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     public AccountRepositoryImpl() {
         accountMap = new HashMap<>();
+        increment = 0L;
     }
 
     @Override

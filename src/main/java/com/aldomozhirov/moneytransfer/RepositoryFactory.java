@@ -1,6 +1,7 @@
-package com.aldomozhirov.moneytransfer.repository.impl;
+package com.aldomozhirov.moneytransfer;
 
 import com.aldomozhirov.moneytransfer.repository.*;
+import com.aldomozhirov.moneytransfer.repository.impl.*;
 
 public class RepositoryFactory {
 

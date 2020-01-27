@@ -15,6 +15,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
     public TransactionRepositoryImpl() {
         transactionMap = new HashMap<>();
+        increment = 0L;
     }
 
     @Override
