@@ -44,8 +44,14 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public Account get(Long id) {
+    public Account getById(Long id) {
         return accountMap.get(id);
+    }
+
+    @Override
+    public List<Account> getByUserId(Long userId) {
+        //TODO
+        return null;
     }
 
     @Override

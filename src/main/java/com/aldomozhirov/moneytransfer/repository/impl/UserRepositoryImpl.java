@@ -44,7 +44,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User get(Long id) {
+    public User getById(Long id) {
         return userMap.get(id);
     }
 

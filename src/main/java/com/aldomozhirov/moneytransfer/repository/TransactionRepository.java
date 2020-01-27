@@ -1,5 +1,6 @@
 package com.aldomozhirov.moneytransfer.repository;
 
+import com.aldomozhirov.moneytransfer.dto.Account;
 import com.aldomozhirov.moneytransfer.dto.Transaction;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
 
@@ -27,7 +28,24 @@ public interface TransactionRepository {
      * @return Transaction object or null if there is no Transaction with specified id
      * @throws RepositoryException
      */
-    Transaction get(Long id) throws RepositoryException;
+    Transaction getById(Long id) throws RepositoryException;
+
+    /**
+     * Get Transaction entries by sourceAccountId
+     * @param sourceAccountId
+     * @return
+     * @throws RepositoryException
+     */
+    List<Transaction> getBySourceAccountId(Long sourceAccountId) throws RepositoryException;
+
+    /**
+     * Get Transaction entries by targetAccountId
+     * @param targetAccountId
+     * @return
+     * @throws RepositoryException
+     */
+    List<Transaction> getByTargetAccountId(Long targetAccountId) throws RepositoryException;
+
 
     /**
      * Get all Transaction entries stored

@@ -8,8 +8,6 @@ public class RepositoryFactory {
     private static UserRepository userRepository;
     private static AccountRepository accountRepository;
     private static TransactionRepository transactionRepository;
-    private static UserAccountsRepository userAccountsRepository;
-    private static AccountTransactionsRepository accountTransactionsRepository;
 
     private static RepositoryFactory instance;
 
@@ -17,8 +15,6 @@ public class RepositoryFactory {
         userRepository = new UserRepositoryImpl();
         accountRepository = new AccountRepositoryImpl();
         transactionRepository = new TransactionRepositoryImpl();
-        userAccountsRepository = new UserAccountsRepositoryImpl();
-        accountTransactionsRepository = new AccountTransactionsRepositoryImpl();
     }
 
     public static RepositoryFactory getInstance() {
@@ -40,12 +36,5 @@ public class RepositoryFactory {
         return transactionRepository;
     }
 
-    public UserAccountsRepository getUserAccountsRepository() {
-        return userAccountsRepository;
-    }
-
-    public AccountTransactionsRepository getAccountTransactionsRepository() {
-        return accountTransactionsRepository;
-    }
 
 }

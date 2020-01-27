@@ -63,17 +63,7 @@ public class UserService {
                     userId)
             );
         }
-        AccountRepository accountRepository = repositoryFactory.getAccountRepository();
-        return repositoryFactory.getUserAccountsRepository()
-                .getAll(userId).stream()
-                .map(id -> {
-                    try {
-                        return accountRepository.get(id);
-                    } catch (RepositoryException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
+        return repositoryFactory.getAccountRepository().getByUserId(userId);
     }
 
     public List<Transaction> getUserTransactions(Long userId) throws NoSuchIdException, RepositoryException {
@@ -83,21 +73,43 @@ public class UserService {
                     userId)
             );
         }
-        AccountTransactionsRepository accountTransactionsRepository = repositoryFactory.getAccountTransactionsRepository();
+        //TODO;
+        return null;
+    }
+
+    public List<Transaction> getUserOutcomeTransactions(Long userId) throws NoSuchIdException, RepositoryException {
+        if (!repositoryFactory.getUserRepository().isExists(userId)) {
+            throw new NoSuchIdException(String.format(
+                    "Unable to get outcome transactions of user with id=%d cause such user does not exists",
+                    userId)
+            );
+        }
         TransactionRepository transactionRepository = repositoryFactory.getTransactionRepository();
-        return repositoryFactory.getUserAccountsRepository()
-                .getAll(userId).stream()
-                .flatMap((accountId) -> {
+        return repositoryFactory.getAccountRepository()
+                .getByUserId(userId).stream()
+                .flatMap((account) -> {
                     try {
-                        return accountTransactionsRepository
-                                .getAll(accountId).stream()
-                                .map(transactionId -> {
-                                    try {
-                                        return transactionRepository.get(transactionId);
-                                    } catch (RepositoryException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                });
+                        return transactionRepository.getBySourceAccountId(account.getId()).stream();
+                    } catch (RepositoryException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<Transaction> getUserIncomeTransactions(Long userId) throws NoSuchIdException, RepositoryException {
+        if (!repositoryFactory.getUserRepository().isExists(userId)) {
+            throw new NoSuchIdException(String.format(
+                    "Unable to get income transactions of user with id=%d cause such user does not exists",
+                    userId)
+            );
+        }
+        TransactionRepository transactionRepository = repositoryFactory.getTransactionRepository();
+        return repositoryFactory.getAccountRepository()
+                .getByUserId(userId).stream()
+                .flatMap((account) -> {
+                    try {
+                        return transactionRepository.getByTargetAccountId(account.getId()).stream();
                     } catch (RepositoryException e) {
                         throw new RuntimeException(e);
                     }

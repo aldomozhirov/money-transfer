@@ -38,12 +38,21 @@ public interface AccountRepository {
     Account update(Long id, Account account) throws RepositoryException;
 
     /**
-     * Get Account entry
+     * Get Account entry by accountId
      * @param id
      * @return Account object or null if there is no Account with specified id
      * @throws RepositoryException
      */
-    Account get(Long id) throws RepositoryException;
+    Account getById(Long id) throws RepositoryException;
+
+
+    /**
+     * Get Account entries by userId
+     * @param userId
+     * @return
+     * @throws RepositoryException
+     */
+    List<Account> getByUserId(Long userId) throws RepositoryException;
 
     /**
      * Get all Account entries stored

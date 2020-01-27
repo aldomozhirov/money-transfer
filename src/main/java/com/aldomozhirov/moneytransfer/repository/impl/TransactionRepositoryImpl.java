@@ -30,8 +30,20 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public Transaction get(Long id) {
+    public Transaction getById(Long id) {
         return transactionMap.get(id);
+    }
+
+    @Override
+    public List<Transaction> getBySourceAccountId(Long sourceAccountId) {
+        //TODO
+        return null;
+    }
+
+    @Override
+    public List<Transaction> getByTargetAccountId(Long targetAccountId) {
+        //TODO
+        return null;
     }
 
     @Override

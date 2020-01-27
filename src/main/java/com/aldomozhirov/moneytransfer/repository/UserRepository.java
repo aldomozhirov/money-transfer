@@ -43,7 +43,7 @@ public interface UserRepository {
      * @return User object or null if there is no User with specified id
      * @throws RepositoryException
      */
-    User get(Long id) throws RepositoryException;
+    User getById(Long id) throws RepositoryException;
 
     /**
      * Get all User entries stored
