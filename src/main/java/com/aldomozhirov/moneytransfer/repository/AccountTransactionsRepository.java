@@ -1,13 +1,37 @@
 package com.aldomozhirov.moneytransfer.repository;
 
+import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
+import com.aldomozhirov.moneytransfer.exception.RepositoryException;
+
 import java.util.List;
 
 public interface AccountTransactionsRepository {
 
-    void add(Long accountId, Long transactionId);
+    /**
+     * Add new accountId to transactionId mapping
+     * @param accountId
+     * @param transactionId
+     * @throws RepositoryException
+     */
+    void add(Long accountId, Long transactionId) throws RepositoryException;
 
-    void remove(Long accountId, Long transactionId);
+    /**
+     * Remove accountId to transactionId mapping
+     * @param accountId
+     * @param transactionId
+     * @return true if removal is successful or false if there is no such mapping
+     * @throws RepositoryException
+     * @throws NoSuchIdException
+     */
+    boolean remove(Long accountId, Long transactionId) throws RepositoryException;
 
-    List<Long> getAll(Long accountId);
+    /**
+     * Get all transactionId mappings for specified accountId
+     * @param accountId
+     * @return List of transactionId mappings or empty List if there are no any
+     * @throws RepositoryException
+     * @throws NoSuchIdException
+     */
+    List<Long> getAll(Long accountId) throws RepositoryException;
 
 }

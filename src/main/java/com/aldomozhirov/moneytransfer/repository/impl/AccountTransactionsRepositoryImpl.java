@@ -21,12 +21,19 @@ public class AccountTransactionsRepositoryImpl implements AccountTransactionsRep
     }
 
     @Override
-    public void remove(Long accountId, Long transactionId) {
-        accountTransactionsMap.get(accountId).remove(transactionId);
+    public boolean remove(Long accountId, Long transactionId) {
+        Set<Long> transactionSet;
+        if ((transactionSet = accountTransactionsMap.get(accountId)) == null) {
+            return false;
+        }
+        return transactionSet.remove(transactionId);
     }
 
     @Override
     public List<Long> getAll(Long accountId) {
+        if (!accountTransactionsMap.containsKey(accountId)) {
+            return new ArrayList<>();
+        }
         return new ArrayList<>(accountTransactionsMap.get(accountId));
     }
 

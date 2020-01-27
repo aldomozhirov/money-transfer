@@ -24,8 +24,17 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void remove(Long id) {
-        userMap.remove(id);
+    public boolean remove(Long id) {
+        return userMap.remove(id) != null;
+    }
+
+    @Override
+    public User update(Long id, User user) {
+        if (!userMap.containsKey(id)) {
+            return null;
+        }
+        userMap.put(id, user);
+        return user;
     }
 
     @Override

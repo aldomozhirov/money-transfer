@@ -1,17 +1,55 @@
 package com.aldomozhirov.moneytransfer.repository;
 
 import com.aldomozhirov.moneytransfer.dto.User;
+import com.aldomozhirov.moneytransfer.exception.RepositoryException;
 
 import java.util.List;
 
 public interface UserRepository {
 
-    User add(User user);
+    /**
+     * Add new User entry
+     * @param user
+     * @return
+     * @throws RepositoryException
+     */
+    User add(User user) throws RepositoryException;
 
-    void remove(Long id);
+    /**
+     * Remove User entry with specified id
+     * @param id
+     * @return true if removal is successful or false if there is no User with specified id
+     * @throws RepositoryException
+     */
+    boolean remove(Long id) throws RepositoryException;
 
-    User get(Long id);
+    /**
+     * Update User entry
+     * @param user
+     * @return updated User object or null if there is no User with specified id
+     * @throws RepositoryException
+     */
+    User update(Long id, User user) throws RepositoryException;
 
-    List<User> getAll();
+    /**
+     * Check if User entry with specified id exists
+     * @return
+     */
+    boolean isExists(Long id);
+
+    /**
+     * Get User entry
+     * @param id
+     * @return User object or null if there is no User with specified id
+     * @throws RepositoryException
+     */
+    User get(Long id) throws RepositoryException;
+
+    /**
+     * Get all User entries stored
+     * @return List of User objects
+     * @throws RepositoryException
+     */
+    List<User> getAll() throws RepositoryException;
 
 }

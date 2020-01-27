@@ -24,13 +24,17 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public void remove(Long id) {
-        accountMap.remove(id);
+    public boolean remove(Long id) {
+        return accountMap.remove(id) != null;
     }
 
     @Override
-    public void update(Account account) {
-        accountMap.put(account.getId(), account);
+    public Account update(Long id, Account account) {
+        if (!accountMap.containsKey(id)) {
+            return null;
+        }
+        accountMap.put(id, account);
+        return account;
     }
 
     @Override

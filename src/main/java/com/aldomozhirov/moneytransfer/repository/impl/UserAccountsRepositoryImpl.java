@@ -22,12 +22,19 @@ public class UserAccountsRepositoryImpl implements UserAccountsRepository {
     }
 
     @Override
-    public void remove(Long userId, Long accountId) {
-        userAccountsMap.get(userId).remove(accountId);
+    public boolean remove(Long userId, Long accountId) {
+        Set<Long> accountSet;
+        if ((accountSet = userAccountsMap.get(userId)) == null) {
+            return false;
+        }
+        return accountSet.remove(accountId);
     }
 
     @Override
     public List<Long> getAll(Long userId) {
+        if (!userAccountsMap.containsKey(userId)) {
+            return new ArrayList<>();
+        }
         return new ArrayList<>(userAccountsMap.get(userId));
     }
 
