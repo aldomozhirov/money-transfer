@@ -1,6 +1,7 @@
 package com.aldomozhirov.moneytransfer.service;
 
 import com.aldomozhirov.moneytransfer.RepositoryFactory;
+import com.aldomozhirov.moneytransfer.constant.ExceptionConstants;
 import com.aldomozhirov.moneytransfer.dto.Account;
 import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
@@ -27,7 +28,7 @@ public class AccountService {
     public Account createAccount(Account account) throws RepositoryException, NoSuchIdException {
         if (!repositoryFactory.getUserRepository().isExists(account.getUserId())) {
             throw new NoSuchIdException(String.format(
-                    "Unable to create account for user with id=%d cause such user does not exists",
+                    ExceptionConstants.UNABLE_TO_CREATE_ACCOUNT_CAUSE_SUCH_USER_DOES_NOT_EXISTS,
                     account.getUserId())
             );
         }
@@ -37,7 +38,7 @@ public class AccountService {
     public void deleteAccount(Long accountId) throws NoSuchIdException, RepositoryException {
         if (!repositoryFactory.getAccountRepository().remove(accountId)) {
             throw new NoSuchIdException(String.format(
-                    "Unable to delete account with id=%d cause such account does not exists",
+                    ExceptionConstants.UNABLE_TO_DELETE_ACCOUNT_CAUSE_SUCH_ACCOUNT_DOES_NOT_EXISTS,
                     accountId)
             );
         }
@@ -47,7 +48,7 @@ public class AccountService {
         Account account = repositoryFactory.getAccountRepository().getById(accountId);
         if (account == null) {
             throw new NoSuchIdException(String.format(
-                    "Cannot find account with id=%d",
+                    ExceptionConstants.CANNOT_FIND_ACCOUNT_BY_ID,
                     accountId)
             );
         }
@@ -57,7 +58,7 @@ public class AccountService {
     public List<Account> getAccountsByUser(Long userId) throws NoSuchIdException, RepositoryException {
         if (!repositoryFactory.getUserRepository().isExists(userId)) {
             throw new NoSuchIdException(String.format(
-                    "Unable to get accounts of user with id=%d cause such user does not exists",
+                    ExceptionConstants.UNABLE_TO_GET_ACCOUNTS_CAUSE_SUCH_USER_DOES_NOT_EXISTS,
                     userId)
             );
         }
@@ -68,7 +69,7 @@ public class AccountService {
         Account account = repositoryFactory.getAccountRepository().getById(accountId);
         if (account == null) {
             throw new NoSuchIdException(String.format(
-                    "Unable to get current balance on account with id=%d cause such account does not exists",
+                    ExceptionConstants.UNABLE_TO_GET_BALANCE_CAUSE_SUCH_ACCOUNT_DOES_NOT_EXISTS,
                     accountId)
             );
         }

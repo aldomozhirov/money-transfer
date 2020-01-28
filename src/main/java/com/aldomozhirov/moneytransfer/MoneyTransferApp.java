@@ -3,6 +3,7 @@ package com.aldomozhirov.moneytransfer;
 import com.aldomozhirov.moneytransfer.controller.AccountController;
 import com.aldomozhirov.moneytransfer.controller.TransactionController;
 import com.aldomozhirov.moneytransfer.controller.UserController;
+import com.aldomozhirov.moneytransfer.mapper.CheckedExceptionMapper;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -30,6 +31,7 @@ public class MoneyTransferApp {
         controllers.add(AccountController.class.getCanonicalName());
         controllers.add(TransactionController.class.getCanonicalName());
         controllers.add(UserController.class.getCanonicalName());
+        controllers.add(CheckedExceptionMapper.class.getCanonicalName());
 
         Server server = new Server(8080);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);

@@ -1,5 +1,6 @@
 package com.aldomozhirov.moneytransfer.repository.impl;
 
+import com.aldomozhirov.moneytransfer.constant.ExceptionConstants;
 import com.aldomozhirov.moneytransfer.dto.Transaction;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
 import com.aldomozhirov.moneytransfer.repository.TransactionRepository;
@@ -24,7 +25,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         if (transaction.getId() != null) {
             if (transactionMap.containsKey(transaction.getId())) {
                 throw new RepositoryException(String.format(
-                        "Transaction with id=%d already exists",
+                        ExceptionConstants.TRANSACTION_ALREADY_EXISTS,
                         transaction.getId())
                 );
             }

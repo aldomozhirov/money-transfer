@@ -1,6 +1,7 @@
 package com.aldomozhirov.moneytransfer.service;
 
 import com.aldomozhirov.moneytransfer.RepositoryFactory;
+import com.aldomozhirov.moneytransfer.constant.ExceptionConstants;
 import com.aldomozhirov.moneytransfer.dto.Account;
 import com.aldomozhirov.moneytransfer.dto.Transaction;
 import com.aldomozhirov.moneytransfer.exception.IncorrectInputDataException;
@@ -37,7 +38,7 @@ public class TransactionService {
 
     public Transaction performTransaction(Transaction transaction) throws IncorrectInputDataException, NoSuchIdException, NotEnoughMoneyException, RepositoryException {
         if(transaction.getAmount() < 0) {
-            throw new IncorrectInputDataException("Transaction amount have to be grater than 0");
+            throw new IncorrectInputDataException(ExceptionConstants.TRANSACTION_AMOUNT_SHOULD_BE_POSITIVE);
         }
         AccountRepository accountRepository = repositoryFactory.getAccountRepository();
         TransactionRepository transactionRepository = repositoryFactory.getTransactionRepository();
@@ -45,17 +46,17 @@ public class TransactionService {
         Account target = accountRepository.getById(transaction.getTargetAccountId());
         if (source == null) {
             throw new NoSuchIdException(String.format(
-                    "Cannot find source account with id=%d specified in transaction",
+                    ExceptionConstants.CANNOT_FIND_SOURCE_ACCOUNT,
                     transaction.getSourceAccountId()));
         }
         if (target == null) {
             throw new NoSuchIdException(String.format(
-                    "Cannot find target account with id=%d specified in transaction",
+                    ExceptionConstants.CANNOT_FIND_TARGET_ACCOUNT,
                     transaction.getTargetAccountId()));
         }
         if (source.getBalance() - transaction.getAmount() < 0) {
             throw new NotEnoughMoneyException(String.format(
-                    "Not enough money to perform the transaction on the source account with id=%d",
+                    ExceptionConstants.NOT_ENOUGH_MONEY,
                     transaction.getSourceAccountId())
             );
         }
@@ -68,7 +69,7 @@ public class TransactionService {
         Transaction transaction = repositoryFactory.getTransactionRepository().getById(transactionId);
         if (transaction == null) {
             throw new NoSuchIdException(String.format(
-                    "Cannot find transaction with id=%d",
+                    ExceptionConstants.CANNOT_FIND_TRANSACTION_BY_ID,
                     transactionId));
         }
         return transaction;
@@ -77,7 +78,7 @@ public class TransactionService {
     public List<Transaction> getTransactionsByAccount(Long accountId) throws NoSuchIdException, RepositoryException {
         if(!repositoryFactory.getAccountRepository().isExists(accountId)) {
             throw new NoSuchIdException(String.format(
-                    "Unable to get transactions of account with id=%d cause such account does not exists",
+                    ExceptionConstants.UNABLE_TO_GET_TRANSACTIONS_CAUSE_SUCH_ACCOUNT_DOES_NOT_EXISTS,
                     accountId)
             );
         }
@@ -87,7 +88,7 @@ public class TransactionService {
     public List<Transaction> getTransactionsByUser(Long userId) throws NoSuchIdException, RepositoryException {
         if (!repositoryFactory.getUserRepository().isExists(userId)) {
             throw new NoSuchIdException(String.format(
-                    "Unable to get transactions of user with id=%d cause such user does not exists",
+                    ExceptionConstants.UNABLE_TO_GET_TRANSACTIONS_CAUSE_SUCH_USER_DOES_NOT_EXISTS,
                     userId)
             );
         }
@@ -109,7 +110,7 @@ public class TransactionService {
     public List<Transaction> getOutcomeTransactionsByAccount(Long accountId) throws NoSuchIdException, RepositoryException {
         if(!repositoryFactory.getAccountRepository().isExists(accountId)) {
             throw new NoSuchIdException(String.format(
-                    "Unable to get outcome transactions of account with id=%d cause such account does not exists",
+                    ExceptionConstants.UNABLE_TO_GET_OUTCOME_TRANSACTIONS_CAUSE_SUCH_ACCOUNT_DOES_NOT_EXISTS,
                     accountId)
             );
         }
@@ -119,7 +120,7 @@ public class TransactionService {
     public List<Transaction> getOutcomeTransactionsByUser(Long userId) throws NoSuchIdException, RepositoryException {
         if (!repositoryFactory.getUserRepository().isExists(userId)) {
             throw new NoSuchIdException(String.format(
-                    "Unable to get outcome transactions of user with id=%d cause such user does not exists",
+                    ExceptionConstants.UNABLE_TO_GET_OUTCOME_TRANSACTIONS_CAUSE_SUCH_USER_DOES_NOT_EXISTS,
                     userId)
             );
         }
@@ -140,7 +141,7 @@ public class TransactionService {
     public List<Transaction> getIncomeTransactionsByAccount(Long accountId) throws NoSuchIdException, RepositoryException {
         if(!repositoryFactory.getAccountRepository().isExists(accountId)) {
             throw new NoSuchIdException(String.format(
-                    "Unable to get income transactions of account with id=%d cause such account does not exists",
+                    ExceptionConstants.UNABLE_TO_GET_INCOME_TRANSACTIONS_CAUSE_SUCH_ACCOUNT_DOES_NOT_EXISTS,
                     accountId)
             );
         }
@@ -150,7 +151,7 @@ public class TransactionService {
     public List<Transaction> getIncomeTransactionsByUser(Long userId) throws NoSuchIdException, RepositoryException {
         if (!repositoryFactory.getUserRepository().isExists(userId)) {
             throw new NoSuchIdException(String.format(
-                    "Unable to get income transactions of user with id=%d cause such user does not exists",
+                    ExceptionConstants.UNABLE_TO_GET_INCOME_TRANSACTIONS_CAUSE_SUCH_USER_DOES_NOT_EXISTS,
                     userId)
             );
         }

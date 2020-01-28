@@ -1,5 +1,6 @@
 package com.aldomozhirov.moneytransfer.repository.impl;
 
+import com.aldomozhirov.moneytransfer.constant.ExceptionConstants;
 import com.aldomozhirov.moneytransfer.dto.User;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
 import com.aldomozhirov.moneytransfer.repository.UserRepository;
@@ -24,7 +25,7 @@ public class UserRepositoryImpl implements UserRepository {
         if (user.getId() != null) {
             if (userMap.containsKey(user.getId())) {
                 throw new RepositoryException(String.format(
-                        "User with id=%d already exists",
+                        ExceptionConstants.USER_ALREADY_EXISTS,
                         user.getId())
                 );
             }

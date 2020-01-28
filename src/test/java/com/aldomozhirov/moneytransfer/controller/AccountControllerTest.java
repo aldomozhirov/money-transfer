@@ -16,14 +16,14 @@ public class AccountControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCreateAccount() throws IOException, URISyntaxException {
-        Account account = new Account(1L, 0.0);
+        Account account = new Account(2L, 0.0);
         String jsonInString = mapper.writeValueAsString(account);
         HttpResponse response = postRequest("/account/create", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         Account aAfterCreation = mapper.readValue(jsonString, Account.class);
-        Assert.assertEquals(Long.valueOf(1L), aAfterCreation.getUserId());
+        Assert.assertEquals(Long.valueOf(2L), aAfterCreation.getUserId());
         Assert.assertEquals(Double.valueOf(0.0), aAfterCreation.getBalance());
     }
 

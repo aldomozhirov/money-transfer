@@ -1,5 +1,6 @@
 package com.aldomozhirov.moneytransfer.repository.impl;
 
+import com.aldomozhirov.moneytransfer.constant.ExceptionConstants;
 import com.aldomozhirov.moneytransfer.dto.Account;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
 import com.aldomozhirov.moneytransfer.repository.AccountRepository;
@@ -24,7 +25,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         if (account.getId() != null) {
             if (accountMap.containsKey(account.getId())) {
                 throw new RepositoryException(String.format(
-                        "Account with id=%d already exists",
+                        ExceptionConstants.ACCOUNT_ALREADY_EXISTS,
                         account.getId())
                 );
             }

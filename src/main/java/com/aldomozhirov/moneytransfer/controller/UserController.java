@@ -22,7 +22,7 @@ public class UserController {
 
     @DELETE
     @Path("/{id}")
-    public Response deleteUser(@PathParam("id") long id) throws NoSuchIdException, RepositoryException {
+    public Response deleteUser(@PathParam("id") long id) throws RepositoryException, NoSuchIdException {
         UserService.getInstance().deleteUser(id);
         return null;
     }

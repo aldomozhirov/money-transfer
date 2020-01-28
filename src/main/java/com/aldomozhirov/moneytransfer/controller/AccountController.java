@@ -4,7 +4,6 @@ import com.aldomozhirov.moneytransfer.dto.Account;
 import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
 import com.aldomozhirov.moneytransfer.service.AccountService;
-import com.aldomozhirov.moneytransfer.service.UserService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
