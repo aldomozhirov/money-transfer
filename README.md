@@ -79,6 +79,10 @@ mvn exec:java
 }
 ```
 
+### Constraints
+- Transaction amount should be positive
+- User cannot be deleted if there are related accounts with this User
+
 ### Http Status
 - 200 OK 
 - 400 Bad Request

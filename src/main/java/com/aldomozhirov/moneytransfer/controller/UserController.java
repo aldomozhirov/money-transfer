@@ -2,6 +2,7 @@ package com.aldomozhirov.moneytransfer.controller;
 
 import com.aldomozhirov.moneytransfer.dto.User;
 import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
+import com.aldomozhirov.moneytransfer.exception.RelationException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
 import com.aldomozhirov.moneytransfer.service.UserService;
 
@@ -22,7 +23,7 @@ public class UserController {
 
     @DELETE
     @Path("/{id}")
-    public Response deleteUser(@PathParam("id") long id) throws RepositoryException, NoSuchIdException {
+    public Response deleteUser(@PathParam("id") long id) throws RepositoryException, NoSuchIdException, RelationException {
         UserService.getInstance().deleteUser(id);
         return null;
     }
