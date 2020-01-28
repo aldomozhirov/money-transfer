@@ -68,7 +68,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public List<Transaction> getByAccountId(Long accountId) throws RepositoryException {
+    public List<Transaction> getByAccountId(Long accountId) {
         List<Transaction> transactions = new ArrayList<>();
         for(Transaction transaction : transactionMap.values()) {
             if (transaction.getSourceAccountId().equals(accountId) || transaction.getTargetAccountId().equals(accountId)) {

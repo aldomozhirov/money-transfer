@@ -39,14 +39,18 @@ public abstract class AbstractControllerTest {
 
     static final Account[] SAMPLE_ACCOUNTS = {
         new Account(1L, 1L, 10.0),
-        new Account(2L, 2L, 30.0),
-        new Account(3L, 3L, 140.56),
-        new Account(4L, 3L, 280.10)
+        new Account(2L, 1L, 30.0),
+        new Account(3L, 2L, 60.0),
+        new Account(4L, 3L, 140.56),
+        new Account(5L, 3L, 280.10)
     };
 
     static final Transaction[] SAMPLE_TRANSACTIONS = {
-        new Transaction(1L, 2L, 1L, 10.0),
-        new Transaction(2L, 1L, 3L, 21.28)
+        new Transaction(1L, 1L, 2L, 10.0),
+        new Transaction(2L, 2L, 1L, 20.0),
+        new Transaction(3L, 2L, 3L, 20.0),
+        new Transaction(4L, 3L, 2L, 30.0),
+        new Transaction(5L, 3L, 4L, 21.28)
     };
 
     ObjectMapper mapper = new ObjectMapper();

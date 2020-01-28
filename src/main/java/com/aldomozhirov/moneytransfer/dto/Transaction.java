@@ -16,6 +16,8 @@ public class Transaction {
     @JsonProperty(required = true)
     private Double amount;
 
+    public Transaction() {}
+
     public Transaction(Long id, Long sourceAccountId, Long targetAccountId, Double amount) {
         this.id = id;
         this.sourceAccountId = sourceAccountId;
