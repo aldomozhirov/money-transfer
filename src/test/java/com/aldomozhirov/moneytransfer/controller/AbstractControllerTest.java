@@ -91,19 +91,19 @@ public abstract class AbstractControllerTest {
         }
     }
 
-    protected HttpResponse getRequest(String path) throws URISyntaxException, IOException {
+    HttpResponse getRequest(String path) throws URISyntaxException, IOException {
         URI uri = builder.setPath(path).build();
         HttpGet request = new HttpGet(uri);
         return client.execute(request);
     }
 
-    protected HttpResponse deleteRequest(String path) throws URISyntaxException, IOException {
+    HttpResponse deleteRequest(String path) throws URISyntaxException, IOException {
         URI uri = builder.setPath(path).build();
         HttpDelete request = new HttpDelete(uri);
         return client.execute(request);
     }
 
-    protected HttpResponse postRequest(String path, String jsonString) throws URISyntaxException, IOException {
+    HttpResponse postRequest(String path, String jsonString) throws URISyntaxException, IOException {
         URI uri = builder.setPath(path).build();
         StringEntity entity = new StringEntity(jsonString);
         HttpPost request = new HttpPost(uri);
@@ -112,7 +112,7 @@ public abstract class AbstractControllerTest {
         return client.execute(request);
     }
 
-    protected HttpResponse putRequest(String path, String jsonString) throws URISyntaxException, IOException {
+    HttpResponse putRequest(String path, String jsonString) throws URISyntaxException, IOException {
         URI uri = builder.setPath(path).build();
         StringEntity entity = new StringEntity(jsonString);
         HttpPut request = new HttpPut(uri);

@@ -1,5 +1,7 @@
 package com.aldomozhirov.moneytransfer.exception;
 
+import org.eclipse.jetty.http.HttpStatus;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -20,7 +22,9 @@ public class RepositoryException extends Exception implements ExceptionMapper<Re
     @Override
     public Response toResponse(RepositoryException exception)
     {
-        return Response.status(400).entity(exception.getMessage())
+        return Response
+                .status(HttpStatus.BAD_REQUEST_400)
+                .entity(exception.getMessage())
                 .type("text/plain").build();
     }
 

@@ -2,6 +2,7 @@ package com.aldomozhirov.moneytransfer.controller;
 
 import com.aldomozhirov.moneytransfer.dto.Transaction;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
         String jsonInString = mapper.writeValueAsString(transaction);
         HttpResponse response = postRequest("/transaction", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(200, statusCode);
+        Assert.assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         Transaction tAfterPerforming = mapper.readValue(jsonString, Transaction.class);
         Assert.assertEquals(Long.valueOf(4L), tAfterPerforming.getSourceAccountId());
@@ -33,7 +34,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
         String jsonInString = mapper.writeValueAsString(transaction);
         HttpResponse response = postRequest("/transaction", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(400, statusCode);
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
     @Test
@@ -42,7 +43,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
         String jsonInString = mapper.writeValueAsString(transaction);
         HttpResponse response = postRequest("/transaction", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(400, statusCode);
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
     @Test
@@ -51,7 +52,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
         String jsonInString = mapper.writeValueAsString(transaction);
         HttpResponse response = postRequest("/transaction", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(400, statusCode);
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
     @Test
@@ -60,14 +61,14 @@ public class TransactionControllerTest extends AbstractControllerTest {
         String jsonInString = mapper.writeValueAsString(transaction);
         HttpResponse response = postRequest("/transaction", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(400, statusCode);
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
     @Test
     public void testGetTransactionById() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/1");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(200, statusCode);
+        Assert.assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         Transaction actualTransaction = mapper.readValue(jsonString, Transaction.class);
         Transaction expectedTransaction = SAMPLE_TRANSACTIONS[0];
@@ -78,14 +79,14 @@ public class TransactionControllerTest extends AbstractControllerTest {
     public void testGetTransactionByIncorrectId() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/10");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(400, statusCode);
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
     @Test
     public void testGetAllTransactionsByAccount() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/account/2");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(200, statusCode);
+        Assert.assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         Transaction[] actualTransactions = mapper.readValue(jsonString, Transaction[].class);
         Transaction[] expectedTransactions = {SAMPLE_TRANSACTIONS[0], SAMPLE_TRANSACTIONS[1], SAMPLE_TRANSACTIONS[2], SAMPLE_TRANSACTIONS[3]};
@@ -96,14 +97,14 @@ public class TransactionControllerTest extends AbstractControllerTest {
     public void testGetAllTransactionsByNotExistingAccount() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/account/10");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(400, statusCode);
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
     @Test
     public void testGetOutcomeTransactionsByAccount() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/account/2/outcome");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(200, statusCode);
+        Assert.assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         Transaction[] actualTransactions = mapper.readValue(jsonString, Transaction[].class);
         Transaction[] expectedTransactions = {SAMPLE_TRANSACTIONS[1], SAMPLE_TRANSACTIONS[2]};
@@ -114,14 +115,14 @@ public class TransactionControllerTest extends AbstractControllerTest {
     public void testGetOutcomeTransactionsByNotExistingAccount() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/account/10/outcome");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(400, statusCode);
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
     @Test
     public void testGetIncomeTransactionsByAccount() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/account/2/income");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(200, statusCode);
+        Assert.assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         Transaction[] actualTransactions = mapper.readValue(jsonString, Transaction[].class);
         Transaction[] expectedTransactions = {SAMPLE_TRANSACTIONS[0], SAMPLE_TRANSACTIONS[3]};
@@ -132,14 +133,14 @@ public class TransactionControllerTest extends AbstractControllerTest {
     public void testGetIncomeTransactionsByNotExistingAccount() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/account/10/income");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(400, statusCode);
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
     @Test
     public void testGetAllTransactionsByUser() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/user/1");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(200, statusCode);
+        Assert.assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         Transaction[] actualTransactions = mapper.readValue(jsonString, Transaction[].class);
         Transaction[] expectedTransactions = {SAMPLE_TRANSACTIONS[0], SAMPLE_TRANSACTIONS[1], SAMPLE_TRANSACTIONS[2], SAMPLE_TRANSACTIONS[3]};
@@ -150,14 +151,14 @@ public class TransactionControllerTest extends AbstractControllerTest {
     public void testGetAllTransactionsByNotExistingUser() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/user/10");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(400, statusCode);
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
     @Test
     public void testGetOutcomeTransactionsByUser() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/user/1/outcome");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(200, statusCode);
+        Assert.assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         Transaction[] actualTransactions = mapper.readValue(jsonString, Transaction[].class);
         Transaction[] expectedTransactions = {SAMPLE_TRANSACTIONS[0], SAMPLE_TRANSACTIONS[1], SAMPLE_TRANSACTIONS[2]};
@@ -168,7 +169,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
     public void testGetOutcomeTransactionsByNotExistingUser() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/user/10/outcome");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(400, statusCode);
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
 
@@ -176,7 +177,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
     public void testGetIncomeTransactionsByUser() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/user/1/income");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(200, statusCode);
+        Assert.assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         Transaction[] actualTransactions = mapper.readValue(jsonString, Transaction[].class);
         Transaction[] expectedTransactions = {SAMPLE_TRANSACTIONS[0], SAMPLE_TRANSACTIONS[1], SAMPLE_TRANSACTIONS[3]};
@@ -187,14 +188,14 @@ public class TransactionControllerTest extends AbstractControllerTest {
     public void testGetIncomeTransactionsByNotExistingUser() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/user/10/income");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(400, statusCode);
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
     @Test
     public void testGetAllTransactions() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/all");
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         Transaction[] transactions = mapper.readValue(jsonString, Transaction[].class);
         Assert.assertTrue(transactions.length > 0);

@@ -2,6 +2,7 @@ package com.aldomozhirov.moneytransfer.controller;
 
 import com.aldomozhirov.moneytransfer.dto.User;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
@@ -18,7 +19,7 @@ public class UserControllerTest extends AbstractControllerTest {
         String jsonInString = mapper.writeValueAsString(user);
         HttpResponse response = postRequest("/user/create", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         User uAfterCreation = mapper.readValue(jsonString, User.class);
         assertEquals("Robert", uAfterCreation.getFirstName());
@@ -29,21 +30,21 @@ public class UserControllerTest extends AbstractControllerTest {
     public void testDeleteUser() throws IOException, URISyntaxException {
         HttpResponse response = deleteRequest("/user/4");
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(204, statusCode);
+        assertEquals(HttpStatus.SC_NO_CONTENT, statusCode);
     }
 
     @Test
     public void testDeleteNotExistingUser() throws IOException, URISyntaxException {
         HttpResponse response = deleteRequest("/user/10");
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(400, statusCode);
+        assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
     @Test
     public void testGetUserById() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/user/1");
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         User actualUser = mapper.readValue(jsonString, User.class);
         User expectedUser = SAMPLE_USERS[0];
@@ -54,14 +55,14 @@ public class UserControllerTest extends AbstractControllerTest {
     public void testGetUserByIncorrectId() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/user/10");
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(400, statusCode);
+        assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
 
     @Test
     public void testGetAllUsers() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/user/all");
         int statusCode = response.getStatusLine().getStatusCode();
-        assertEquals(200, statusCode);
+        assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         User[] users = mapper.readValue(jsonString, User[].class);
         assertTrue(users.length > 0);
