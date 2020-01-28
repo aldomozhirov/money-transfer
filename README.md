@@ -49,6 +49,36 @@ mvn exec:java
 | GET | /transaction/user/{id}/income | get income transactions by user id | 
 | GET | /transaction/all | get all transactions | 
 
+### Entities JSON structure
+
+##### User
+```sh
+{
+    "id": 1,
+    "firstName": "Aleksei",
+    "lastName": "Domozhirov",
+}
+```
+
+##### Account
+```sh
+{
+    "id": 1,
+    "userId": 1,
+    "balance": 100.0,
+}
+```
+
+##### Transaction
+```sh
+{
+    "id": 1,
+    "sourceAccountId": 1,
+    "targetAccountId": 2,
+    "amount": 30.0
+}
+```
+
 ### Http Status
 - 200 OK 
 - 400 Bad Request
