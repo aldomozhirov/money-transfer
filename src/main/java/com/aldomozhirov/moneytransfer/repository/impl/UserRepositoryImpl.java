@@ -1,6 +1,7 @@
 package com.aldomozhirov.moneytransfer.repository.impl;
 
 import com.aldomozhirov.moneytransfer.dto.User;
+import com.aldomozhirov.moneytransfer.exception.RepositoryException;
 import com.aldomozhirov.moneytransfer.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -11,26 +12,36 @@ import java.util.Map;
 public class UserRepositoryImpl implements UserRepository {
 
     private Map<Long, User> userMap;
-    private Long increment;
+    private long increment;
 
     public UserRepositoryImpl() {
         userMap = new HashMap<>();
-        increment = 0L;
+        increment = 1L;
     }
 
     @Override
-    public User add(User user) {
-        user.setId(increment++);
-        return userMap.put(user.getId(), user);
+    public synchronized User add(User user) throws RepositoryException {
+        if (user.getId() != null) {
+            if (userMap.containsKey(user.getId())) {
+                throw new RepositoryException(String.format(
+                        "User with id=%d already exists",
+                        user.getId())
+                );
+            }
+        } else {
+            user.setId(increment());
+        }
+        userMap.put(user.getId(), user);
+        return user;
     }
 
     @Override
-    public boolean remove(Long id) {
+    public synchronized boolean remove(Long id) {
         return userMap.remove(id) != null;
     }
 
     @Override
-    public User update(Long id, User user) {
+    public synchronized User update(Long id, User user) {
         if (!userMap.containsKey(id)) {
             return null;
         }
@@ -51,6 +62,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll() {
         return new ArrayList<>(userMap.values());
+    }
+
+    private long increment() {
+        while (userMap.containsKey(increment)) {
+            increment++;
+        }
+        return increment;
     }
 
 }

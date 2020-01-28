@@ -6,7 +6,9 @@ import com.aldomozhirov.moneytransfer.dto.Account;
 import com.aldomozhirov.moneytransfer.dto.Transaction;
 import com.aldomozhirov.moneytransfer.dto.User;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.aldomozhirov.moneytransfer.repository.AccountRepository;
+import com.aldomozhirov.moneytransfer.repository.TransactionRepository;
+import com.aldomozhirov.moneytransfer.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -19,25 +21,39 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.util.EntityUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static org.junit.Assert.assertEquals;
-
 public abstract class AbstractControllerTest {
 
-    private static PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
+    static final User[] SAMPLE_USERS = {
+        new User(1L, "Aleksei", "Domozhirov"),
+        new User(2L, "John", "Smith"),
+        new User(3L, "Peter", "Simpson"),
+        new User(4L, "Jenifer", "Roberts")
+    };
 
-    static HttpClient client;
+    static final Account[] SAMPLE_ACCOUNTS = {
+        new Account(1L, 1L, 10.0),
+        new Account(2L, 2L, 30.0),
+        new Account(3L, 3L, 140.56),
+        new Account(4L, 3L, 280.10)
+    };
+
+    static final Transaction[] SAMPLE_TRANSACTIONS = {
+        new Transaction(1L, 2L, 1L, 10.0),
+        new Transaction(2L, 1L, 3L, 21.28)
+    };
+
     ObjectMapper mapper = new ObjectMapper();
-    URIBuilder builder = new URIBuilder().setScheme("http").setHost("localhost:8080");
 
+    private static PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
+    private static HttpClient client;
+    private URIBuilder builder = new URIBuilder().setScheme("http").setHost("localhost:8080");
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -57,26 +73,18 @@ public abstract class AbstractControllerTest {
     }
 
     private static void addSampleData(RepositoryFactory repositoryFactory) throws RepositoryException {
-
-        // Add sample users
-
-        repositoryFactory.getUserRepository().add(new User(1L, "Aleksei", "Domozhirov"));
-        repositoryFactory.getUserRepository().add(new User(2L, "John", "Smith"));
-        repositoryFactory.getUserRepository().add(new User(3L, "Peter", "Simpson"));
-        repositoryFactory.getUserRepository().add(new User(4L, "Jenifer", "Roberts"));
-
-        // Add sample accounts
-
-        repositoryFactory.getAccountRepository().add(new Account(1L, 1L, 10.0));
-        repositoryFactory.getAccountRepository().add(new Account(2L, 2L, 30.0));
-        repositoryFactory.getAccountRepository().add(new Account(3L, 3L, 140.56));
-        repositoryFactory.getAccountRepository().add(new Account(4L, 3L, 280.10));
-
-        // Add sample transactions
-
-        repositoryFactory.getTransactionRepository().add(new Transaction(1L, 2L, 1L, 10.0));
-        repositoryFactory.getTransactionRepository().add(new Transaction(2L, 1L, 3L, 21.28));
-
+        UserRepository userRepository = repositoryFactory.getUserRepository();
+        for(User u : SAMPLE_USERS) {
+            userRepository.add(u);
+        }
+        AccountRepository accountRepository = repositoryFactory.getAccountRepository();
+        for(Account a : SAMPLE_ACCOUNTS) {
+            accountRepository.add(a);
+        }
+        TransactionRepository transactionRepository = repositoryFactory.getTransactionRepository();
+        for(Transaction t : SAMPLE_TRANSACTIONS) {
+            transactionRepository.add(t);
+        }
     }
 
     protected HttpResponse getRequest(String path) throws URISyntaxException, IOException {

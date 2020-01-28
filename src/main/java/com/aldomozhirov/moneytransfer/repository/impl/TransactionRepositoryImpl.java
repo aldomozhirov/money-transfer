@@ -12,17 +12,27 @@ import java.util.Map;
 public class TransactionRepositoryImpl implements TransactionRepository {
 
     private Map<Long, Transaction> transactionMap;
-    private Long increment;
+    private long increment;
 
     public TransactionRepositoryImpl() {
         transactionMap = new HashMap<>();
-        increment = 0L;
+        increment = 1L;
     }
 
     @Override
-    public Transaction add(Transaction transaction) {
-        transaction.setId(increment++);
-        return transactionMap.put(transaction.getId(), transaction);
+    public synchronized Transaction add(Transaction transaction) throws RepositoryException {
+        if (transaction.getId() != null) {
+            if (transactionMap.containsKey(transaction.getId())) {
+                throw new RepositoryException(String.format(
+                        "Transaction with id=%d already exists",
+                        transaction.getId())
+                );
+            }
+        } else {
+            transaction.setId(increment());
+        }
+        transactionMap.put(transaction.getId(), transaction);
+        return transaction;
     }
 
     @Override
@@ -50,7 +60,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     public List<Transaction> getByTargetAccountId(Long targetAccountId) {
         List<Transaction> transactions = new ArrayList<>();
         for(Transaction transaction : transactionMap.values()) {
-            if (transaction.getSourceAccountId().equals(targetAccountId)) {
+            if (transaction.getTargetAccountId().equals(targetAccountId)) {
                 transactions.add(transaction);
             }
         }
@@ -71,6 +81,13 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     @Override
     public List<Transaction> getAll() {
         return new ArrayList<>(transactionMap.values());
+    }
+
+    private long increment() {
+        while (transactionMap.containsKey(increment)) {
+            increment++;
+        }
+        return increment;
     }
 
 }

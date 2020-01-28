@@ -1,11 +1,10 @@
 package com.aldomozhirov.moneytransfer.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Transaction {
 
-    @JsonIgnore
+    @JsonProperty
     private Long id;
 
     @JsonProperty(required = true)

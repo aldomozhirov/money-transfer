@@ -45,8 +45,9 @@ public class UserControllerTest extends AbstractControllerTest {
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(200, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
-        User user = mapper.readValue(jsonString, User.class);
-        //TODO
+        User actualUser = mapper.readValue(jsonString, User.class);
+        User expectedUser = SAMPLE_USERS[0];
+        assertUsersEquals(expectedUser, actualUser);
     }
 
     @Test
@@ -63,7 +64,16 @@ public class UserControllerTest extends AbstractControllerTest {
         assertEquals(200, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
         User[] users = mapper.readValue(jsonString, User[].class);
-        assertTrue(users.length > 0);
+        assertEquals(SAMPLE_USERS.length, users.length);
+        for (int i = 0; i < users.length; i++) {
+            assertUsersEquals(SAMPLE_USERS[i], users[i]);
+        }
+    }
+
+    private void assertUsersEquals(User expected, User actual) {
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getFirstName(), actual.getFirstName());
+        assertEquals(expected.getLastName(), actual.getLastName());
     }
 
 }

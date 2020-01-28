@@ -1,6 +1,7 @@
 package com.aldomozhirov.moneytransfer.controller;
 
 import com.aldomozhirov.moneytransfer.dto.Transaction;
+import com.aldomozhirov.moneytransfer.exception.IncorrectInputDataException;
 import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
 import com.aldomozhirov.moneytransfer.exception.NotEnoughMoneyException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
@@ -17,7 +18,7 @@ import java.util.List;
 public class TransactionController {
 
     @POST
-    public Transaction transferMoney(Transaction transaction) throws RepositoryException, NoSuchIdException, NotEnoughMoneyException {
+    public Transaction transferMoney(Transaction transaction) throws RepositoryException, NoSuchIdException, NotEnoughMoneyException, IncorrectInputDataException {
         return TransactionService.getInstance().performTransaction(transaction);
     }
 

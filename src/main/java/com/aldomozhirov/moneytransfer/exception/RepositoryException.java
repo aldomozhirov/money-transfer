@@ -2,7 +2,9 @@ package com.aldomozhirov.moneytransfer.exception;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
+@Provider
 public class RepositoryException extends Exception implements ExceptionMapper<RepositoryException> {
 
     private static final long serialVersionUID = 1L;
