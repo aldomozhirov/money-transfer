@@ -40,7 +40,7 @@ mvn exec:java
 | GET | /account/{id}/balance | get account balance by id | 
 | GET | /account/all | get all accounts |
 | POST | /transaction/perform | perform money transfer | 
-| PUT | /transaction/revert | revert money transfer | 
+| PUT | /transaction/revert/{id} | revert money transfer | 
 | GET | /transaction/{id} | get transaction by id |
 | GET | /transaction/account/{id} | get transactions by account id |
 | GET | /transaction/account/{id}/outcome | get outcome transactions by account id |
@@ -82,6 +82,7 @@ mvn exec:java
 
 ### Constraints
 - Transaction amount should be positive
+- Transaction cannot be reverted if ether source or target Account have been deleted 
 - User cannot be deleted if there are related accounts with this User
 
 ### Http Status

@@ -52,7 +52,9 @@ public abstract class AbstractControllerTest {
         new Transaction(4L, 3L, 2L, 30.0),
         new Transaction(5L, 3L, 4L, 21.28),
         new Transaction(6L, 4L, 5L, 10.0),
-        new Transaction(7L, 4L, 5L, 300.0)
+        new Transaction(7L, 4L, 5L, 300.0),
+        new Transaction(8L, 10L, 5L, 10.0),
+        new Transaction(9L, 4L, 10L, 300.0)
     };
 
     private static PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();

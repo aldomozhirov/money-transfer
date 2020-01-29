@@ -39,7 +39,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
 
     @Test
     public void testPerformTransactionWithIncorrectSourceAccountId() throws IOException, URISyntaxException {
-        Transaction transaction = new Transaction(10L, 5L, 10.0);
+        Transaction transaction = new Transaction(100L, 5L, 10.0);
         String jsonInString = getMapper().writeValueAsString(transaction);
         HttpResponse response = postRequest("/transaction/perform", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
@@ -48,7 +48,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
 
     @Test
     public void testPerformTransactionWithIncorrectTargetAccountId() throws IOException, URISyntaxException {
-        Transaction transaction = new Transaction(4L, 10L, 10.0);
+        Transaction transaction = new Transaction(4L, 100L, 10.0);
         String jsonInString = getMapper().writeValueAsString(transaction);
         HttpResponse response = postRequest("/transaction/perform", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
@@ -82,6 +82,27 @@ public class TransactionControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void testRevertTransactionWithNotExistingSourceId() throws IOException, URISyntaxException {
+        HttpResponse response = putRequest("/transaction/revert/8");
+        int statusCode = response.getStatusLine().getStatusCode();
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
+    }
+
+    @Test
+    public void testRevertTransactionWithNotExistingTargetId() throws IOException, URISyntaxException {
+        HttpResponse response = putRequest("/transaction/revert/9");
+        int statusCode = response.getStatusLine().getStatusCode();
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
+    }
+
+    @Test
+    public void testRevertTransactionByIncorrectId() throws IOException, URISyntaxException {
+        HttpResponse response = putRequest("/transaction/revert/100");
+        int statusCode = response.getStatusLine().getStatusCode();
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
+    }
+
+    @Test
     public void testGetTransactionById() throws IOException, URISyntaxException {
         HttpResponse response = getRequest("/transaction/1");
         int statusCode = response.getStatusLine().getStatusCode();
@@ -94,7 +115,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetTransactionByIncorrectId() throws IOException, URISyntaxException {
-        HttpResponse response = getRequest("/transaction/10");
+        HttpResponse response = getRequest("/transaction/100");
         int statusCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
@@ -112,7 +133,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetAllTransactionsByNotExistingAccount() throws IOException, URISyntaxException {
-        HttpResponse response = getRequest("/transaction/account/10");
+        HttpResponse response = getRequest("/transaction/account/100");
         int statusCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
@@ -130,7 +151,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetOutcomeTransactionsByNotExistingAccount() throws IOException, URISyntaxException {
-        HttpResponse response = getRequest("/transaction/account/10/outcome");
+        HttpResponse response = getRequest("/transaction/account/100/outcome");
         int statusCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
@@ -148,7 +169,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetIncomeTransactionsByNotExistingAccount() throws IOException, URISyntaxException {
-        HttpResponse response = getRequest("/transaction/account/10/income");
+        HttpResponse response = getRequest("/transaction/account/100/income");
         int statusCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
@@ -166,7 +187,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetAllTransactionsByNotExistingUser() throws IOException, URISyntaxException {
-        HttpResponse response = getRequest("/transaction/user/10");
+        HttpResponse response = getRequest("/transaction/user/100");
         int statusCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
@@ -184,7 +205,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetOutcomeTransactionsByNotExistingUser() throws IOException, URISyntaxException {
-        HttpResponse response = getRequest("/transaction/user/10/outcome");
+        HttpResponse response = getRequest("/transaction/user/100/outcome");
         int statusCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
@@ -203,7 +224,7 @@ public class TransactionControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetIncomeTransactionsByNotExistingUser() throws IOException, URISyntaxException {
-        HttpResponse response = getRequest("/transaction/user/10/income");
+        HttpResponse response = getRequest("/transaction/user/100/income");
         int statusCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
     }
