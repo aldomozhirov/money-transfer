@@ -13,13 +13,12 @@ import java.util.List;
 public class TransactionController {
 
     @POST
-    @Path("/perform")
     public Transaction perform(Transaction transaction) throws RepositoryException, NoSuchIdException, NotEnoughMoneyException, IncorrectInputDataException, IncompatibleCurrenciesException {
         return TransactionService.getInstance().performTransaction(transaction);
     }
 
-    @PUT
-    @Path("/revert/{id}")
+    @DELETE
+    @Path("/{id}")
     public Transaction revert(@PathParam("id") Long id) throws RepositoryException, NoSuchIdException, NotEnoughMoneyException {
         return TransactionService.getInstance().revertTransaction(id);
     }

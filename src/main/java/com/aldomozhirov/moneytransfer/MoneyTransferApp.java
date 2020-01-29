@@ -19,13 +19,13 @@ public class MoneyTransferApp {
 
     public static void main(String[] args) {
         try {
-            start();
+            start(8080);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void start() throws Exception {
+    public static void start(int port) throws Exception {
 
         List<String> controllers = new ArrayList<>();
         controllers.add(AccountController.class.getCanonicalName());
@@ -33,7 +33,7 @@ public class MoneyTransferApp {
         controllers.add(UserController.class.getCanonicalName());
         controllers.add(CheckedExceptionMapper.class.getCanonicalName());
 
-        Server server = new Server(8080);
+        Server server = new Server(port);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
         server.setHandler(context);

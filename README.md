@@ -40,8 +40,8 @@ mvn exec:java
 | GET | /account/user/{id} | get accounts by user id | 
 | GET | /account/{id}/balance | get account balance by id | 
 | GET | /account/all | get all accounts |
-| POST | /transaction/perform | perform money transfer | 
-| PUT | /transaction/revert/{id} | revert money transfer | 
+| POST | /transaction | perform money transfer | 
+| DELETE | /transaction/{id} | revert money transfer | 
 | GET | /transaction/{id} | get transaction by id |
 | GET | /transaction/account/{id} | get transactions by account id |
 | GET | /transaction/account/{id}/outcome | get outcome transactions by account id |

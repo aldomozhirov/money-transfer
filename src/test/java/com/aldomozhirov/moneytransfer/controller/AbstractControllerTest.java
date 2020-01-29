@@ -27,6 +27,8 @@ import org.junit.BeforeClass;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class AbstractControllerTest {
 
@@ -64,8 +66,8 @@ public abstract class AbstractControllerTest {
     private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeClass
-    public static void setup() throws Exception {
-        MoneyTransferApp.start();
+    public static void setUp() throws Exception {
+        MoneyTransferApp.start(8080);
         addSampleData(MoneyTransferApp.getRepositoryFactory());
         connManager.setDefaultMaxPerRoute(100);
         connManager.setMaxTotal(200);
@@ -104,12 +106,6 @@ public abstract class AbstractControllerTest {
     HttpResponse deleteRequest(String path) throws URISyntaxException, IOException {
         URI uri = builder.setPath(path).build();
         HttpDelete request = new HttpDelete(uri);
-        return client.execute(request);
-    }
-
-    HttpResponse putRequest(String path) throws URISyntaxException, IOException {
-        URI uri = builder.setPath(path).build();
-        HttpPut request = new HttpPut(uri);
         return client.execute(request);
     }
 
