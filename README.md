@@ -82,6 +82,16 @@ mvn exec:java
 }
 ```
 
+### Server Errors
+
+All handled errors returns as an Error JSON object in response. For example:
+ ```sh
+ {
+     "status": 400,
+     "message": "Cannot find account by id=1"
+ }
+ ```
+
 ### Constraints
 - User cannot be deleted if there are related accounts with this User
 - Supported currency codes are: USD, EUR, PLN, RUB
