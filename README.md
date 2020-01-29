@@ -21,8 +21,15 @@ a pre-installed container/server).
 - Apache HTTP Client (for unit tests)
 
 ### How to run app
+
+##### Using Maven
 ```sh
 mvn exec:java
+```
+
+##### From executable jar
+```sh
+java -jar money-transfer-app.jar
 ```
 
 ### How to run unit tests
