@@ -2,15 +2,16 @@ package com.aldomozhirov.moneytransfer.constant;
 
 public class ExceptionConstants {
 
+    public static final String CANNOT_FIND_USER_BY_ID = "Cannot find account by id=%d";
+    public static final String UNABLE_TO_DELETE_USER_CAUSE_SUCH_USER_DOES_NOT_EXISTS = "Unable to delete user with id=%d cause such user does not exists";
+    public static final String UNABLE_TO_DELETE_USER_CAUSE_IT_HAVE_RELATED_ACCOUNTS = "Unable to delete user with id=%d cause there are related accounts with this user";
+
     public static final String CANNOT_FIND_ACCOUNT_BY_ID = "Cannot find account by id=%d";
+    public static final String UNSUPPORTED_CURRENCY = "Unable to create account because currency code %s is not supported";
     public static final String UNABLE_TO_CREATE_ACCOUNT_CAUSE_SUCH_USER_DOES_NOT_EXISTS = "Unable to create account for user with id=%d cause such user does not exists";
     public static final String UNABLE_TO_DELETE_ACCOUNT_CAUSE_SUCH_ACCOUNT_DOES_NOT_EXISTS = "Unable to delete account with id=%d cause such account does not exists";
     public static final String UNABLE_TO_GET_ACCOUNTS_CAUSE_SUCH_USER_DOES_NOT_EXISTS = "Unable to get accounts of user with id=%d cause such user does not exists";
     public static final String UNABLE_TO_GET_BALANCE_CAUSE_SUCH_ACCOUNT_DOES_NOT_EXISTS = "Unable to get current balance on account with id=%d cause such account does not exists";
-
-    public static final String CANNOT_FIND_USER_BY_ID = "Cannot find account by id=%d";
-    public static final String UNABLE_TO_DELETE_USER_CAUSE_SUCH_USER_DOES_NOT_EXISTS = "Unable to delete user with id=%d cause such user does not exists";
-    public static final String UNABLE_TO_DELETE_USER_CAUSE_IT_HAVE_RELATED_ACCOUNTS = "Unable to delete user with id=%d cause there are related accounts with this user";
 
     public static final String CANNOT_FIND_TRANSACTION_BY_ID = "Cannot find transaction with id=%d";
     public static final String CANNOT_FIND_SOURCE_ACCOUNT = "Cannot find source account with id=%d specified in transaction";

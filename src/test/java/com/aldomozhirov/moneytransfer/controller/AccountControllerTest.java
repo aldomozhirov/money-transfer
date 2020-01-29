@@ -37,6 +37,15 @@ public class AccountControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void testCreateAccountWithUnsupportedCurrencyCode() throws IOException, URISyntaxException {
+        Account account = new Account(2L, "AUD", 0.0);
+        String jsonInString = getMapper().writeValueAsString(account);
+        HttpResponse response = postRequest("/account/create", jsonInString);
+        int statusCode = response.getStatusLine().getStatusCode();
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
+    }
+
+    @Test
     public void testDeleteAccount() throws IOException, URISyntaxException {
         HttpResponse response = deleteRequest("/account/5");
         int statusCode = response.getStatusLine().getStatusCode();

@@ -2,9 +2,11 @@ package com.aldomozhirov.moneytransfer.service;
 
 import com.aldomozhirov.moneytransfer.RepositoryFactory;
 import com.aldomozhirov.moneytransfer.constant.ExceptionConstants;
+import com.aldomozhirov.moneytransfer.constant.SupportedCurrencyCodes;
 import com.aldomozhirov.moneytransfer.dto.Account;
 import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
+import com.aldomozhirov.moneytransfer.exception.UnsupportedCurrencyException;
 
 import java.util.List;
 
@@ -25,12 +27,20 @@ public class AccountService {
         return instance;
     }
 
-    public Account createAccount(Account account) throws RepositoryException, NoSuchIdException {
+    public Account createAccount(Account account) throws RepositoryException, NoSuchIdException, UnsupportedCurrencyException {
         if (!repositoryFactory.getUserRepository().isExists(account.getUserId())) {
             throw new NoSuchIdException(String.format(
                     ExceptionConstants.UNABLE_TO_CREATE_ACCOUNT_CAUSE_SUCH_USER_DOES_NOT_EXISTS,
                     account.getUserId())
             );
+        }
+        try {
+            SupportedCurrencyCodes.valueOf(account.getCurrencyCode());
+        } catch (IllegalArgumentException e) {
+            throw new UnsupportedCurrencyException(String.format(
+                    ExceptionConstants.UNSUPPORTED_CURRENCY,
+                    account.getCurrencyCode()
+            ));
         }
         return repositoryFactory.getAccountRepository().add(account);
     }

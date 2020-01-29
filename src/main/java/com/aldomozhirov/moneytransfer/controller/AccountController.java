@@ -3,6 +3,7 @@ package com.aldomozhirov.moneytransfer.controller;
 import com.aldomozhirov.moneytransfer.dto.Account;
 import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
+import com.aldomozhirov.moneytransfer.exception.UnsupportedCurrencyException;
 import com.aldomozhirov.moneytransfer.service.AccountService;
 
 import javax.ws.rs.*;
@@ -16,7 +17,7 @@ public class AccountController {
 
     @POST
     @Path("/create")
-    public Account createAccount(Account account) throws NoSuchIdException, RepositoryException {
+    public Account createAccount(Account account) throws NoSuchIdException, RepositoryException, UnsupportedCurrencyException {
         return AccountService.getInstance().createAccount(account);
     }
 
