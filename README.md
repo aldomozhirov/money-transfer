@@ -20,9 +20,26 @@ a pre-installed container/server).
 - Jetty Container
 - Apache HTTP Client (for unit tests)
 
-### How to run
+### How to run app
 ```sh
 mvn exec:java
+```
+
+### How to run unit tests
+
+##### User controller
+```sh
+mvn surefire:test -Dtest=UserControllerTest
+```
+
+##### Account controller
+```sh
+mvn surefire:test -Dtest=AccountControllerTest
+```
+
+##### Transaction controller
+```sh
+mvn surefire:test -Dtest=TransactionControllerTest
 ```
 
 ### Available Endpoints

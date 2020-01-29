@@ -16,15 +16,19 @@ import java.util.stream.Collectors;
 
 public class MoneyTransferApp {
 
-    public static void main(String[] args) {
-        try {
-            start(8080);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private final static int DEFAULT_PORT = 8080;
+
+    private int port;
+
+    public MoneyTransferApp(int port) {
+        this.port = port;
     }
 
-    public static void start(int port) throws Exception {
+    public MoneyTransferApp() {
+        this(DEFAULT_PORT);
+    }
+
+    public void start() throws Exception {
 
         // Initialize controllers list to handle
 
@@ -38,7 +42,7 @@ public class MoneyTransferApp {
 
         RepositoryFactory.create();
 
-        // Initialize and start server
+        // Initialize server
 
         Server server = new Server(port);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -49,12 +53,28 @@ public class MoneyTransferApp {
                 "jersey.config.server.provider.classnames",
                 controllers.stream().map(Object::toString).collect(Collectors.joining(","))
         );
-        server.start();
+
+        // Start server
+
+        try {
+            server.start();
+            server.join();
+        } finally {
+            server.destroy();
+        }
 
     }
 
-    public static RepositoryFactory getRepositoryFactory() {
+    public RepositoryFactory getRepositoryFactory() {
         return RepositoryFactory.getInstance();
+    }
+
+    public static void main(String[] args) {
+        try {
+            new MoneyTransferApp().start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

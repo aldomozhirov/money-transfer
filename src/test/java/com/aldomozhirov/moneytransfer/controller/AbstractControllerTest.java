@@ -66,14 +66,15 @@ public abstract class AbstractControllerTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        MoneyTransferApp.start(PORT);
-        addSampleData(MoneyTransferApp.getRepositoryFactory());
+        MoneyTransferApp app = new MoneyTransferApp();
+        app.start();
         connManager.setDefaultMaxPerRoute(100);
         connManager.setMaxTotal(200);
         client = HttpClients.custom()
                 .setConnectionManager(connManager)
                 .setConnectionManagerShared(true)
                 .build();
+        addSampleData(app.getRepositoryFactory());
     }
 
     @AfterClass
