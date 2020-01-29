@@ -2,7 +2,7 @@ package com.aldomozhirov.moneytransfer.constant;
 
 public class ExceptionConstants {
 
-    public static final String CANNOT_FIND_USER_BY_ID = "Cannot find account by id=%d";
+    public static final String CANNOT_FIND_USER_BY_ID = "Cannot find user by id=%d";
     public static final String UNABLE_TO_DELETE_USER_CAUSE_SUCH_USER_DOES_NOT_EXISTS = "Unable to delete user with id=%d cause such user does not exists";
     public static final String UNABLE_TO_DELETE_USER_CAUSE_IT_HAVE_RELATED_ACCOUNTS = "Unable to delete user with id=%d cause there are related accounts with this user";
     public static final String UNABLE_TO_UPDATE_USER_CAUSE_SUCH_USER_DOES_NOT_EXISTS = "Unable to update user with id=%d cause such user does not exists";
