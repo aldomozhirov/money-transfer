@@ -1,8 +1,9 @@
 package com.aldomozhirov.moneytransfer.mapper;
 
+import com.aldomozhirov.moneytransfer.dto.Error;
 import com.aldomozhirov.moneytransfer.exception.CheckedException;
-import org.eclipse.jetty.http.HttpStatus;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -16,8 +17,8 @@ public class CheckedExceptionMapper implements ExceptionMapper<CheckedException>
     public Response toResponse(CheckedException exception) {
         return Response
                 .status(exception.getStatus())
-                .entity(exception.getMessage())
-                .type("text/plain").build();
+                .entity(new Error(exception.getStatus(), exception.getMessage()))
+                .type(MediaType.APPLICATION_JSON).build();
     }
 
 }

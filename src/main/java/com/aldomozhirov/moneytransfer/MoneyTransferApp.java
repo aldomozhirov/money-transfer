@@ -3,6 +3,7 @@ package com.aldomozhirov.moneytransfer;
 import com.aldomozhirov.moneytransfer.controller.AccountController;
 import com.aldomozhirov.moneytransfer.controller.TransactionController;
 import com.aldomozhirov.moneytransfer.controller.UserController;
+import com.aldomozhirov.moneytransfer.factory.RepositoryFactory;
 import com.aldomozhirov.moneytransfer.mapper.CheckedExceptionMapper;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -15,8 +16,6 @@ import java.util.stream.Collectors;
 
 public class MoneyTransferApp {
 
-    private static RepositoryFactory repositoryFactory;
-
     public static void main(String[] args) {
         try {
             start(8080);
@@ -27,11 +26,19 @@ public class MoneyTransferApp {
 
     public static void start(int port) throws Exception {
 
+        // Initialize controllers list to handle
+
         List<String> controllers = new ArrayList<>();
         controllers.add(AccountController.class.getCanonicalName());
         controllers.add(TransactionController.class.getCanonicalName());
         controllers.add(UserController.class.getCanonicalName());
         controllers.add(CheckedExceptionMapper.class.getCanonicalName());
+
+        // Initialize repositories
+
+        RepositoryFactory.create();
+
+        // Initialize and start server
 
         Server server = new Server(port);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -44,12 +51,10 @@ public class MoneyTransferApp {
         );
         server.start();
 
-        repositoryFactory = RepositoryFactory.getInstance();
-
     }
 
     public static RepositoryFactory getRepositoryFactory() {
-        return repositoryFactory;
+        return RepositoryFactory.getInstance();
     }
 
 }

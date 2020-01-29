@@ -1,7 +1,7 @@
 package com.aldomozhirov.moneytransfer.controller;
 
 import com.aldomozhirov.moneytransfer.MoneyTransferApp;
-import com.aldomozhirov.moneytransfer.RepositoryFactory;
+import com.aldomozhirov.moneytransfer.factory.RepositoryFactory;
 import com.aldomozhirov.moneytransfer.dto.Account;
 import com.aldomozhirov.moneytransfer.dto.Transaction;
 import com.aldomozhirov.moneytransfer.dto.User;
@@ -27,8 +27,6 @@ import org.junit.BeforeClass;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class AbstractControllerTest {
 
@@ -60,14 +58,15 @@ public abstract class AbstractControllerTest {
         new Transaction(9L, 4L, 10L, 300.0)
     };
 
+    private static final int PORT = 8080;
     private static PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
     private static HttpClient client;
-    private URIBuilder builder = new URIBuilder().setScheme("http").setHost("localhost:8080");
+    private URIBuilder builder = new URIBuilder().setScheme("http").setHost("localhost").setPort(PORT);
     private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeClass
     public static void setUp() throws Exception {
-        MoneyTransferApp.start(8080);
+        MoneyTransferApp.start(PORT);
         addSampleData(MoneyTransferApp.getRepositoryFactory());
         connManager.setDefaultMaxPerRoute(100);
         connManager.setMaxTotal(200);

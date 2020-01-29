@@ -1,6 +1,6 @@
 package com.aldomozhirov.moneytransfer.service;
 
-import com.aldomozhirov.moneytransfer.RepositoryFactory;
+import com.aldomozhirov.moneytransfer.factory.RepositoryFactory;
 import com.aldomozhirov.moneytransfer.constant.ExceptionConstants;
 import com.aldomozhirov.moneytransfer.dto.Account;
 import com.aldomozhirov.moneytransfer.dto.Transaction;

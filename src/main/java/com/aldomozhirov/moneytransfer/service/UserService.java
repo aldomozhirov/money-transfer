@@ -6,8 +6,7 @@ import com.aldomozhirov.moneytransfer.exception.IncorrectInputDataException;
 import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
 import com.aldomozhirov.moneytransfer.exception.RelationException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
-import com.aldomozhirov.moneytransfer.RepositoryFactory;
-import com.aldomozhirov.moneytransfer.repository.AccountRepository;
+import com.aldomozhirov.moneytransfer.factory.RepositoryFactory;
 import com.aldomozhirov.moneytransfer.repository.UserRepository;
 
 import java.util.List;
