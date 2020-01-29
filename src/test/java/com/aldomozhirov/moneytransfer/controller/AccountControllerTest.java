@@ -49,7 +49,10 @@ public class AccountControllerTest extends AbstractControllerTest {
     public void testDeleteAccount() throws IOException, URISyntaxException {
         HttpResponse response = deleteRequest("/account/5");
         int statusCode = response.getStatusLine().getStatusCode();
-        Assert.assertEquals(HttpStatus.SC_NO_CONTENT, statusCode);
+        Assert.assertEquals(HttpStatus.SC_OK, statusCode);
+        String jsonString = EntityUtils.toString(response.getEntity());
+        Account aRemoved = getMapper().readValue(jsonString, Account.class);
+        assertAccountEquals(SAMPLE_ACCOUNTS[4], aRemoved);
     }
 
     @Test

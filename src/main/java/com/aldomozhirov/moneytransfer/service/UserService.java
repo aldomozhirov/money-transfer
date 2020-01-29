@@ -2,6 +2,7 @@ package com.aldomozhirov.moneytransfer.service;
 
 import com.aldomozhirov.moneytransfer.constant.ExceptionConstants;
 import com.aldomozhirov.moneytransfer.dto.User;
+import com.aldomozhirov.moneytransfer.exception.IncorrectInputDataException;
 import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
 import com.aldomozhirov.moneytransfer.exception.RelationException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
@@ -32,7 +33,7 @@ public class UserService {
         return repositoryFactory.getUserRepository().add(user);
     }
 
-    public void deleteUser(Long userId) throws NoSuchIdException, RepositoryException, RelationException {
+    public User deleteUser(Long userId) throws NoSuchIdException, RepositoryException, RelationException {
         UserRepository userRepository = repositoryFactory.getUserRepository();
         if (!userRepository.isExists(userId)) {
             throw new NoSuchIdException(String.format(
@@ -46,7 +47,24 @@ public class UserService {
                     userId
             ));
         }
-        userRepository.remove(userId);
+        return userRepository.remove(userId);
+    }
+
+    public User updateUser(Long userId, User user) throws RepositoryException, NoSuchIdException, IncorrectInputDataException {
+        UserRepository userRepository = repositoryFactory.getUserRepository();
+        if (!userRepository.isExists(userId)) {
+            throw new NoSuchIdException(String.format(
+                    ExceptionConstants.UNABLE_TO_UPDATE_USER_CAUSE_SUCH_USER_DOES_NOT_EXISTS,
+                    userId)
+            );
+        }
+        if(user.getId() != null && !userId.equals(user.getId())) {
+            throw new IncorrectInputDataException(String.format(
+                   ExceptionConstants.INCONSISTENT_DATA_INPUT,
+                   userId)
+            );
+        }
+        return repositoryFactory.getUserRepository().update(userId, user);
     }
 
     public User getUser(Long userId) throws NoSuchIdException, RepositoryException {

@@ -21,7 +21,7 @@ public interface TransactionRepository {
      * @return true if removal is successful or false if there is no Transaction with specified id
      * @throws RepositoryException
      */
-    boolean remove(Long id) throws RepositoryException;
+    Transaction remove(Long id) throws RepositoryException;
 
     /**
      * Check if Transaction entry with specified id exists

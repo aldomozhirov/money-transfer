@@ -113,6 +113,15 @@ public abstract class AbstractControllerTest {
         return client.execute(request);
     }
 
+    HttpResponse putRequest(String path, String jsonString) throws URISyntaxException, IOException {
+        URI uri = builder.setPath(path).build();
+        StringEntity entity = new StringEntity(jsonString);
+        HttpPut request = new HttpPut(uri);
+        request.setHeader("Content-type", "application/json");
+        request.setEntity(entity);
+        return client.execute(request);
+    }
+
     HttpResponse postRequest(String path, String jsonString) throws URISyntaxException, IOException {
         URI uri = builder.setPath(path).build();
         StringEntity entity = new StringEntity(jsonString);

@@ -29,7 +29,8 @@ mvn exec:java
 
 | HTTP METHOD | PATH | USAGE |
 | -----------| ------ | ------ |
-| POST | /user/create | create a new user | 
+| POST | /user/create | create a new user |
+| PUT | /user/{id} | update user |  
 | DELETE | /user/{id} | delete user | 
 | GET | /user/{id} | get user by id | 
 | GET | /user/all | get all users | 
@@ -67,7 +68,7 @@ mvn exec:java
     "id": 1,
     "userId": 1,
     "currencyCode": "USD",
-    "balance": 100.0,
+    "balance": 100.0
 }
 ```
 

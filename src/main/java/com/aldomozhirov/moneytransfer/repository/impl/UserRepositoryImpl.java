@@ -37,8 +37,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public synchronized boolean remove(Long id) {
-        return userMap.remove(id) != null;
+    public synchronized User remove(Long id) {
+        return userMap.remove(id);
     }
 
     @Override

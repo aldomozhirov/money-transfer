@@ -21,7 +21,7 @@ public interface AccountRepository {
      * @return true if removal is successful or false if there is no Account with specified id
      * @throws RepositoryException
      */
-    boolean remove(Long id) throws RepositoryException;
+    Account remove(Long id) throws RepositoryException;
 
     /**
      * Check if Account entry with specified id exists

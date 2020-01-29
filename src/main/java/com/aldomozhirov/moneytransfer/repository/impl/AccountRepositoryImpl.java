@@ -37,8 +37,8 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public synchronized boolean remove(Long id) {
-        return accountMap.remove(id) != null;
+    public synchronized Account remove(Long id) {
+        return accountMap.remove(id);
     }
 
     @Override

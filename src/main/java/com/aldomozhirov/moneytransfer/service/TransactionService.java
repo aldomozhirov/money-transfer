@@ -82,7 +82,7 @@ public class TransactionService {
                     transaction.getTargetAccountId()));
         }
         moveMoney(target, source, transaction.getAmount(), accountRepository);
-        return transaction;
+        return transactionRepository.remove(transactionId);
     }
 
     public Transaction getTransactionById(long transactionId) throws NoSuchIdException, RepositoryException {

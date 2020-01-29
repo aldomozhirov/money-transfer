@@ -1,6 +1,7 @@
 package com.aldomozhirov.moneytransfer.controller;
 
 import com.aldomozhirov.moneytransfer.dto.User;
+import com.aldomozhirov.moneytransfer.exception.IncorrectInputDataException;
 import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
 import com.aldomozhirov.moneytransfer.exception.RelationException;
 import com.aldomozhirov.moneytransfer.exception.RepositoryException;
@@ -21,11 +22,16 @@ public class UserController {
         return UserService.getInstance().createUser(user);
     }
 
+    @PUT
+    @Path("/{id}")
+    public User updateUser(@PathParam("id") long id, User user) throws RepositoryException, NoSuchIdException, IncorrectInputDataException {
+        return UserService.getInstance().updateUser(id, user);
+    }
+
     @DELETE
     @Path("/{id}")
-    public Response deleteUser(@PathParam("id") long id) throws RepositoryException, NoSuchIdException, RelationException {
-        UserService.getInstance().deleteUser(id);
-        return null;
+    public User deleteUser(@PathParam("id") long id) throws RepositoryException, NoSuchIdException, RelationException {
+        return UserService.getInstance().deleteUser(id);
     }
 
     @GET

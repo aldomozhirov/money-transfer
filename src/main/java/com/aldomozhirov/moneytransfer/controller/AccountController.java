@@ -23,9 +23,8 @@ public class AccountController {
 
     @DELETE
     @Path("/{id}")
-    public Response deleteAccount(@PathParam("id") long id) throws NoSuchIdException, RepositoryException {
-        AccountService.getInstance().deleteAccount(id);
-        return null;
+    public Account deleteAccount(@PathParam("id") long id) throws NoSuchIdException, RepositoryException {
+        return AccountService.getInstance().deleteAccount(id);
     }
 
     @GET

@@ -45,13 +45,15 @@ public class AccountService {
         return repositoryFactory.getAccountRepository().add(account);
     }
 
-    public void deleteAccount(Long accountId) throws NoSuchIdException, RepositoryException {
-        if (!repositoryFactory.getAccountRepository().remove(accountId)) {
+    public Account deleteAccount(Long accountId) throws NoSuchIdException, RepositoryException {
+        Account removedAccount;
+        if ((removedAccount = repositoryFactory.getAccountRepository().remove(accountId)) == null) {
             throw new NoSuchIdException(String.format(
                     ExceptionConstants.UNABLE_TO_DELETE_ACCOUNT_CAUSE_SUCH_ACCOUNT_DOES_NOT_EXISTS,
                     accountId)
             );
         }
+        return removedAccount;
     }
 
     public Account getAccountById(Long accountId) throws NoSuchIdException, RepositoryException {
