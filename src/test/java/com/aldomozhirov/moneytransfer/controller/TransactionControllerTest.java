@@ -65,6 +65,15 @@ public class TransactionControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void testPerformTransactionWithIncompatibleCurrencyCodes() throws IOException, URISyntaxException {
+        Transaction transaction = new Transaction(5L, 6L, 10.0);
+        String jsonInString = getMapper().writeValueAsString(transaction);
+        HttpResponse response = postRequest("/transaction/perform", jsonInString);
+        int statusCode = response.getStatusLine().getStatusCode();
+        Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
+    }
+
+    @Test
     public void testRevertTransaction() throws IOException, URISyntaxException {
         HttpResponse response = putRequest("/transaction/revert/6");
         int statusCode = response.getStatusLine().getStatusCode();

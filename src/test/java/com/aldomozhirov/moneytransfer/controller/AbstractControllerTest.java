@@ -38,11 +38,12 @@ public abstract class AbstractControllerTest {
     };
 
     static final Account[] SAMPLE_ACCOUNTS = {
-        new Account(1L, 1L, 10.0),
-        new Account(2L, 1L, 30.0),
-        new Account(3L, 2L, 60.0),
-        new Account(4L, 3L, 140.56),
-        new Account(5L, 3L, 280.10)
+        new Account(1L,1L, "USD", 10.0),
+        new Account(2L, 1L, "USD", 30.0),
+        new Account(3L, 2L, "USD", 60.0),
+        new Account(4L, 3L, "USD", 140.56),
+        new Account(5L, 3L, "USD", 280.10),
+        new Account(6L, 3L, "EUR", 30.10)
     };
 
     static final Transaction[] SAMPLE_TRANSACTIONS = {

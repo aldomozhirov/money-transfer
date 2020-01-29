@@ -16,7 +16,7 @@ public class AccountControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCreateAccount() throws IOException, URISyntaxException {
-        Account account = new Account(2L, 0.0);
+        Account account = new Account(2L, "USD", 0.0);
         String jsonInString = getMapper().writeValueAsString(account);
         HttpResponse response = postRequest("/account/create", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
@@ -29,7 +29,7 @@ public class AccountControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCreateAccountForNotExistingUser() throws IOException, URISyntaxException {
-        Account account = new Account(5L, 0.0);
+        Account account = new Account(5L, "USD", 0.0);
         String jsonInString = getMapper().writeValueAsString(account);
         HttpResponse response = postRequest("/account/create", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();

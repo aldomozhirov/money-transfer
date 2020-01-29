@@ -10,23 +10,29 @@ public class Account {
     @JsonProperty(required = true)
     private Long userId;
 
+    @JsonProperty(required = true)
+    private String currencyCode;
+
     @JsonProperty()
     private Double balance;
 
     public Account() {}
 
-    public Account(Long userId) {
+    public Account(Long userId, String currencyCode) {
         this.userId = userId;
+        this.currencyCode = currencyCode;
     }
 
-    public Account(Long userId, Double balance) {
+    public Account(Long userId, String currencyCode, Double balance) {
         this.userId = userId;
+        this.currencyCode = currencyCode;
         this.balance = balance;
     }
 
-    public Account(Long id, Long userId, Double balance) {
+    public Account(Long id, Long userId, String currencyCode, Double balance) {
         this.id = id;
         this.userId = userId;
+        this.currencyCode = currencyCode;
         this.balance = balance;
     }
 
@@ -36,6 +42,10 @@ public class Account {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
 
     public void setBalance(Double balance) {
@@ -52,6 +62,10 @@ public class Account {
 
     public Double getBalance() {
         return balance;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
     }
 
 }

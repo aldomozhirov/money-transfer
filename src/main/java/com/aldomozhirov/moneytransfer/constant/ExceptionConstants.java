@@ -16,6 +16,7 @@ public class ExceptionConstants {
     public static final String CANNOT_FIND_SOURCE_ACCOUNT = "Cannot find source account with id=%d specified in transaction";
     public static final String CANNOT_FIND_TARGET_ACCOUNT = "Cannot find target account with id=%d specified in transaction";
     public static final String TRANSACTION_AMOUNT_SHOULD_BE_POSITIVE = "Transaction amount should be grater than 0";
+    public static final String ACCOUNTS_HAVE_INCOMPATIBLE_CURRENCY_CODES = "Transaction cannot be performed cause specified accounts have incompatible currency codes";
     public static final String NOT_ENOUGH_MONEY = "Not enough money to perform the transaction on the source account with id=%d";
     public static final String UNABLE_TO_GET_TRANSACTIONS_CAUSE_SUCH_ACCOUNT_DOES_NOT_EXISTS = "Unable to get transactions of account with id=%d cause such account does not exists";
     public static final String UNABLE_TO_GET_TRANSACTIONS_CAUSE_SUCH_USER_DOES_NOT_EXISTS = "Unable to get transactions of user with id=%d cause such user does not exists";

@@ -4,10 +4,7 @@ import com.aldomozhirov.moneytransfer.RepositoryFactory;
 import com.aldomozhirov.moneytransfer.constant.ExceptionConstants;
 import com.aldomozhirov.moneytransfer.dto.Account;
 import com.aldomozhirov.moneytransfer.dto.Transaction;
-import com.aldomozhirov.moneytransfer.exception.IncorrectInputDataException;
-import com.aldomozhirov.moneytransfer.exception.NoSuchIdException;
-import com.aldomozhirov.moneytransfer.exception.NotEnoughMoneyException;
-import com.aldomozhirov.moneytransfer.exception.RepositoryException;
+import com.aldomozhirov.moneytransfer.exception.*;
 import com.aldomozhirov.moneytransfer.repository.AccountRepository;
 import com.aldomozhirov.moneytransfer.repository.TransactionRepository;
 
@@ -36,7 +33,7 @@ public class TransactionService {
         return instance;
     }
 
-    public Transaction performTransaction(Transaction transaction) throws IncorrectInputDataException, NoSuchIdException, NotEnoughMoneyException, RepositoryException {
+    public Transaction performTransaction(Transaction transaction) throws IncorrectInputDataException, NoSuchIdException, NotEnoughMoneyException, RepositoryException, IncompatibleCurrenciesException {
         if(transaction.getAmount() < 0) {
             throw new IncorrectInputDataException(ExceptionConstants.TRANSACTION_AMOUNT_SHOULD_BE_POSITIVE);
         }
@@ -53,6 +50,11 @@ public class TransactionService {
             throw new NoSuchIdException(String.format(
                     ExceptionConstants.CANNOT_FIND_TARGET_ACCOUNT,
                     transaction.getTargetAccountId()));
+        }
+        if (!source.getCurrencyCode().equals(target.getCurrencyCode())) {
+            throw new IncompatibleCurrenciesException(
+                    ExceptionConstants.ACCOUNTS_HAVE_INCOMPATIBLE_CURRENCY_CODES
+            );
         }
         moveMoney(source, target, transaction.getAmount(), accountRepository);
         return transactionRepository.add(transaction);
