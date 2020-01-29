@@ -66,6 +66,7 @@ mvn exec:java
 {
     "id": 1,
     "userId": 1,
+    "currencyCode": "USD",
     "balance": 100.0,
 }
 ```
@@ -81,9 +82,11 @@ mvn exec:java
 ```
 
 ### Constraints
-- Transaction amount should be positive
-- Transaction cannot be reverted if ether source or target Account have been deleted 
 - User cannot be deleted if there are related accounts with this User
+- Supported currency codes are: USD, EUR, PLN, RUB
+- Transaction amount should be positive
+- Transaction cannot be reverted if ether source or target Account have been deleted
+- Money transfer is not allowed between accounts with different currency 
 
 ### Http Status
 - 200 OK 
