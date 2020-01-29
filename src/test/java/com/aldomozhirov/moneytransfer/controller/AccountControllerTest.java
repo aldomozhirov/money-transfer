@@ -17,12 +17,12 @@ public class AccountControllerTest extends AbstractControllerTest {
     @Test
     public void testCreateAccount() throws IOException, URISyntaxException {
         Account account = new Account(2L, 0.0);
-        String jsonInString = mapper.writeValueAsString(account);
+        String jsonInString = getMapper().writeValueAsString(account);
         HttpResponse response = postRequest("/account/create", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
-        Account aAfterCreation = mapper.readValue(jsonString, Account.class);
+        Account aAfterCreation = getMapper().readValue(jsonString, Account.class);
         Assert.assertEquals(Long.valueOf(2L), aAfterCreation.getUserId());
         Assert.assertEquals(Double.valueOf(0.0), aAfterCreation.getBalance());
     }
@@ -30,7 +30,7 @@ public class AccountControllerTest extends AbstractControllerTest {
     @Test
     public void testCreateAccountForNotExistingUser() throws IOException, URISyntaxException {
         Account account = new Account(5L, 0.0);
-        String jsonInString = mapper.writeValueAsString(account);
+        String jsonInString = getMapper().writeValueAsString(account);
         HttpResponse response = postRequest("/account/create", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, statusCode);
@@ -56,7 +56,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         int statusCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
-        Account actualAccount = mapper.readValue(jsonString, Account.class);
+        Account actualAccount = getMapper().readValue(jsonString, Account.class);
         Account expectedAccount = SAMPLE_ACCOUNTS[0];
         assertAccountEquals(expectedAccount, actualAccount);
     }
@@ -74,7 +74,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
-        Account[] actualAccounts = mapper.readValue(jsonString, Account[].class);
+        Account[] actualAccounts = getMapper().readValue(jsonString, Account[].class);
         Account[] expectedAccounts = {SAMPLE_ACCOUNTS[0], SAMPLE_ACCOUNTS[1]};
         assertAccountsEquals(expectedAccounts, actualAccounts);
     }
@@ -108,7 +108,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
-        Account[] accounts = mapper.readValue(jsonString, Account[].class);
+        Account[] accounts = getMapper().readValue(jsonString, Account[].class);
         Assert.assertTrue(accounts.length > 0);
     }
 

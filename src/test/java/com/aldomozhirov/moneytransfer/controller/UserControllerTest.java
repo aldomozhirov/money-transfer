@@ -16,12 +16,12 @@ public class UserControllerTest extends AbstractControllerTest {
     @Test
     public void testCreateUser() throws IOException, URISyntaxException {
         User user = new User("Robert", "Lawson");
-        String jsonInString = mapper.writeValueAsString(user);
+        String jsonInString = getMapper().writeValueAsString(user);
         HttpResponse response = postRequest("/user/create", jsonInString);
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
-        User uAfterCreation = mapper.readValue(jsonString, User.class);
+        User uAfterCreation = getMapper().readValue(jsonString, User.class);
         assertEquals("Robert", uAfterCreation.getFirstName());
         assertEquals("Lawson", uAfterCreation.getLastName());
     }
@@ -46,7 +46,7 @@ public class UserControllerTest extends AbstractControllerTest {
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
-        User actualUser = mapper.readValue(jsonString, User.class);
+        User actualUser = getMapper().readValue(jsonString, User.class);
         User expectedUser = SAMPLE_USERS[0];
         assertUserEquals(expectedUser, actualUser);
     }
@@ -64,7 +64,7 @@ public class UserControllerTest extends AbstractControllerTest {
         int statusCode = response.getStatusLine().getStatusCode();
         assertEquals(HttpStatus.SC_OK, statusCode);
         String jsonString = EntityUtils.toString(response.getEntity());
-        User[] users = mapper.readValue(jsonString, User[].class);
+        User[] users = getMapper().readValue(jsonString, User[].class);
         assertTrue(users.length > 0);
     }
 

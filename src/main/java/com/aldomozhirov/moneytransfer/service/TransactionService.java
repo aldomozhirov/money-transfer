@@ -54,15 +54,33 @@ public class TransactionService {
                     ExceptionConstants.CANNOT_FIND_TARGET_ACCOUNT,
                     transaction.getTargetAccountId()));
         }
-        if (source.getBalance() - transaction.getAmount() < 0) {
-            throw new NotEnoughMoneyException(String.format(
-                    ExceptionConstants.NOT_ENOUGH_MONEY,
-                    transaction.getSourceAccountId())
-            );
-        }
-        source.setBalance(source.getBalance() - transaction.getAmount());
-        target.setBalance(target.getBalance() - transaction.getAmount());
+        moveMoney(source, target, transaction.getAmount(), accountRepository);
         return transactionRepository.add(transaction);
+    }
+
+    public Transaction revertTransaction(Long transactionId) throws RepositoryException, NoSuchIdException, NotEnoughMoneyException {
+        TransactionRepository transactionRepository = repositoryFactory.getTransactionRepository();
+        Transaction transaction = transactionRepository.getById(transactionId);
+        if (transaction == null) {
+            throw new NoSuchIdException(String.format(
+                    ExceptionConstants.CANNOT_FIND_TRANSACTION_BY_ID,
+                    transactionId));
+        }
+        AccountRepository accountRepository = repositoryFactory.getAccountRepository();
+        Account source = accountRepository.getById(transaction.getSourceAccountId());
+        if (source == null) {
+            throw new NoSuchIdException(String.format(
+                    ExceptionConstants.UNABLE_TO_REVERT_TRANSACTION_CAUSE_SOURCE_ACCOUNT_REMOVED,
+                    transaction.getTargetAccountId()));
+        }
+        Account target = accountRepository.getById(transaction.getTargetAccountId());
+        if (target == null) {
+            throw new NoSuchIdException(String.format(
+                    ExceptionConstants.UNABLE_TO_REVERT_TRANSACTION_CAUSE_TARGET_ACCOUNT_REMOVED,
+                    transaction.getTargetAccountId()));
+        }
+        moveMoney(target, source, transaction.getAmount(), accountRepository);
+        return transaction;
     }
 
     public Transaction getTransactionById(long transactionId) throws NoSuchIdException, RepositoryException {
@@ -176,6 +194,19 @@ public class TransactionService {
     private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
         Map<Object, Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+    }
+
+    private void moveMoney(Account source, Account target, Double amount, AccountRepository accountRepository) throws NotEnoughMoneyException, RepositoryException {
+        if (source.getBalance() - amount < 0) {
+            throw new NotEnoughMoneyException(String.format(
+                    ExceptionConstants.NOT_ENOUGH_MONEY,
+                    source.getId())
+            );
+        }
+        source.setBalance(source.getBalance() - amount);
+        target.setBalance(target.getBalance() + amount);
+        accountRepository.update(source.getId(), source);
+        accountRepository.update(target.getId(), target);
     }
 
 }

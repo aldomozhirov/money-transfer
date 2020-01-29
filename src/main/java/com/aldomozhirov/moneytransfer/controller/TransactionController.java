@@ -16,8 +16,15 @@ import java.util.List;
 public class TransactionController {
 
     @POST
-    public Transaction transferMoney(Transaction transaction) throws RepositoryException, NoSuchIdException, NotEnoughMoneyException, IncorrectInputDataException {
+    @Path("/perform")
+    public Transaction perform(Transaction transaction) throws RepositoryException, NoSuchIdException, NotEnoughMoneyException, IncorrectInputDataException {
         return TransactionService.getInstance().performTransaction(transaction);
+    }
+
+    @PUT
+    @Path("/revert/{id}")
+    public Transaction revert(@PathParam("id") Long id) throws RepositoryException, NoSuchIdException, NotEnoughMoneyException {
+        return TransactionService.getInstance().revertTransaction(id);
     }
 
     @GET

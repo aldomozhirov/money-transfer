@@ -50,14 +50,15 @@ public abstract class AbstractControllerTest {
         new Transaction(2L, 2L, 1L, 20.0),
         new Transaction(3L, 2L, 3L, 20.0),
         new Transaction(4L, 3L, 2L, 30.0),
-        new Transaction(5L, 3L, 4L, 21.28)
+        new Transaction(5L, 3L, 4L, 21.28),
+        new Transaction(6L, 4L, 5L, 10.0),
+        new Transaction(7L, 4L, 5L, 300.0)
     };
-
-    ObjectMapper mapper = new ObjectMapper();
 
     private static PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
     private static HttpClient client;
     private URIBuilder builder = new URIBuilder().setScheme("http").setHost("localhost:8080");
+    private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -103,6 +104,12 @@ public abstract class AbstractControllerTest {
         return client.execute(request);
     }
 
+    HttpResponse putRequest(String path) throws URISyntaxException, IOException {
+        URI uri = builder.setPath(path).build();
+        HttpPut request = new HttpPut(uri);
+        return client.execute(request);
+    }
+
     HttpResponse postRequest(String path, String jsonString) throws URISyntaxException, IOException {
         URI uri = builder.setPath(path).build();
         StringEntity entity = new StringEntity(jsonString);
@@ -112,13 +119,8 @@ public abstract class AbstractControllerTest {
         return client.execute(request);
     }
 
-    HttpResponse putRequest(String path, String jsonString) throws URISyntaxException, IOException {
-        URI uri = builder.setPath(path).build();
-        StringEntity entity = new StringEntity(jsonString);
-        HttpPut request = new HttpPut(uri);
-        request.setHeader("Content-type", "application/json");
-        request.setEntity(entity);
-        return client.execute(request);
+    ObjectMapper getMapper() {
+        return mapper;
     }
 
 }

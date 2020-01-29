@@ -37,6 +37,11 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
+    public boolean remove(Long id) throws RepositoryException {
+        return transactionMap.remove(id) != null;
+    }
+
+    @Override
     public boolean isExists(Long id) {
         return transactionMap.containsKey(id);
     }

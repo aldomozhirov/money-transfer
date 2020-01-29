@@ -23,6 +23,8 @@ public class ExceptionConstants {
     public static final String UNABLE_TO_GET_OUTCOME_TRANSACTIONS_CAUSE_SUCH_USER_DOES_NOT_EXISTS = "Unable to get outcome transactions of user with id=%d cause such user does not exists";
     public static final String UNABLE_TO_GET_INCOME_TRANSACTIONS_CAUSE_SUCH_ACCOUNT_DOES_NOT_EXISTS = "Unable to get income transactions of account with id=%d cause such account does not exists";
     public static final String UNABLE_TO_GET_INCOME_TRANSACTIONS_CAUSE_SUCH_USER_DOES_NOT_EXISTS = "Unable to get income transactions of user with id=%d cause such user does not exists";
+    public static final String UNABLE_TO_REVERT_TRANSACTION_CAUSE_SOURCE_ACCOUNT_REMOVED = "Unable to revert transaction with id=%d cause source account not exists anymore";
+    public static final String UNABLE_TO_REVERT_TRANSACTION_CAUSE_TARGET_ACCOUNT_REMOVED = "Unable to revert transaction with id=%d cause target account not exists anymore";
 
     public static final String USER_ALREADY_EXISTS = "User with id=%d already exists";
     public static final String ACCOUNT_ALREADY_EXISTS = "Account with id=%d already exists";
