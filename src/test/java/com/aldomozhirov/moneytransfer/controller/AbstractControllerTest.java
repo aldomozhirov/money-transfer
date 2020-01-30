@@ -1,5 +1,6 @@
 package com.aldomozhirov.moneytransfer.controller;
 
+import com.aldomozhirov.moneytransfer.AbstractTest;
 import com.aldomozhirov.moneytransfer.MoneyTransferApp;
 import com.aldomozhirov.moneytransfer.factory.RepositoryFactory;
 import com.aldomozhirov.moneytransfer.dto.Account;
@@ -28,35 +29,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public abstract class AbstractControllerTest {
+public abstract class AbstractControllerTest extends AbstractTest {
 
-    static final User[] SAMPLE_USERS = {
-        new User(1L, "Aleksei", "Domozhirov"),
-        new User(2L, "John", "Smith"),
-        new User(3L, "Peter", "Simpson"),
-        new User(4L, "Jenifer", "Roberts")
-    };
-
-    static final Account[] SAMPLE_ACCOUNTS = {
-        new Account(1L,1L, "USD", 10.0),
-        new Account(2L, 1L, "USD", 30.0),
-        new Account(3L, 2L, "USD", 60.0),
-        new Account(4L, 3L, "USD", 140.56),
-        new Account(5L, 3L, "USD", 280.10),
-        new Account(6L, 3L, "EUR", 30.10)
-    };
-
-    static final Transaction[] SAMPLE_TRANSACTIONS = {
-        new Transaction(1L, 1L, 2L, 10.0),
-        new Transaction(2L, 2L, 1L, 20.0),
-        new Transaction(3L, 2L, 3L, 20.0),
-        new Transaction(4L, 3L, 2L, 30.0),
-        new Transaction(5L, 3L, 4L, 21.28),
-        new Transaction(6L, 4L, 5L, 10.0),
-        new Transaction(7L, 4L, 5L, 300.0),
-        new Transaction(8L, 10L, 5L, 10.0),
-        new Transaction(9L, 4L, 10L, 300.0)
-    };
 
     private static final int PORT = 8080;
     private static PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
@@ -80,21 +54,6 @@ public abstract class AbstractControllerTest {
     @AfterClass
     public static void closeClient() {
         HttpClientUtils.closeQuietly(client);
-    }
-
-    private static void addSampleData(RepositoryFactory repositoryFactory) throws RepositoryException {
-        UserRepository userRepository = repositoryFactory.getUserRepository();
-        for(User u : SAMPLE_USERS) {
-            userRepository.add(u);
-        }
-        AccountRepository accountRepository = repositoryFactory.getAccountRepository();
-        for(Account a : SAMPLE_ACCOUNTS) {
-            accountRepository.add(a);
-        }
-        TransactionRepository transactionRepository = repositoryFactory.getTransactionRepository();
-        for(Transaction t : SAMPLE_TRANSACTIONS) {
-            transactionRepository.add(t);
-        }
     }
 
     HttpResponse getRequest(String path) throws URISyntaxException, IOException {

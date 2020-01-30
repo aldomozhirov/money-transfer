@@ -24,6 +24,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         String jsonString = EntityUtils.toString(response.getEntity());
         Account aAfterCreation = getMapper().readValue(jsonString, Account.class);
         Assert.assertEquals(Long.valueOf(2L), aAfterCreation.getUserId());
+        Assert.assertEquals("USD", aAfterCreation.getCurrencyCode());
         Assert.assertEquals(Double.valueOf(0.0), aAfterCreation.getBalance());
     }
 
@@ -122,19 +123,6 @@ public class AccountControllerTest extends AbstractControllerTest {
         String jsonString = EntityUtils.toString(response.getEntity());
         Account[] accounts = getMapper().readValue(jsonString, Account[].class);
         Assert.assertTrue(accounts.length > 0);
-    }
-
-    private void assertAccountEquals(Account expected, Account actual) {
-        Assert.assertEquals(expected.getId(), actual.getId());
-        Assert.assertEquals(expected.getUserId(), actual.getUserId());
-        Assert.assertEquals(expected.getBalance(), actual.getBalance());
-    }
-
-    private void assertAccountsEquals(Account[] expected, Account[] actual) {
-        assertEquals(expected.length, actual.length);
-        for (int i = 0; i < actual.length; i++) {
-            assertAccountEquals(expected[i], actual[i]);
-        }
     }
 
 }

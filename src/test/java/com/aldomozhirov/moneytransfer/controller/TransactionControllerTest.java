@@ -248,18 +248,4 @@ public class TransactionControllerTest extends AbstractControllerTest {
         Assert.assertTrue(transactions.length > 0);
     }
 
-    private void assertTransactionEquals(Transaction expected, Transaction actual) {
-        Assert.assertEquals(expected.getId(), actual.getId());
-        Assert.assertEquals(expected.getSourceAccountId(), actual.getSourceAccountId());
-        Assert.assertEquals(expected.getTargetAccountId(), actual.getTargetAccountId());
-        Assert.assertEquals(expected.getAmount(), actual.getAmount());
-    }
-
-    private void assertTransactionsEquals(Transaction[] expected, Transaction[] actual) {
-        Assert.assertEquals(expected.length, actual.length);
-        for (int i = 0; i < actual.length; i++) {
-            assertTransactionEquals(expected[i], actual[i]);
-        }
-    }
-
 }

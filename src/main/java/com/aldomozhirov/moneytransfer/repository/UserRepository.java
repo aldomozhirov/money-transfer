@@ -18,7 +18,7 @@ public interface UserRepository {
     /**
      * Remove User entry with specified id
      * @param id
-     * @return true if removal is successful or false if there is no User with specified id
+     * @return removed User object or null if there is no User with specified id
      * @throws RepositoryException
      */
     User remove(Long id) throws RepositoryException;

@@ -93,10 +93,4 @@ public class UserControllerTest extends AbstractControllerTest {
         assertTrue(users.length > 0);
     }
 
-    private void assertUserEquals(User expected, User actual) {
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getFirstName(), actual.getFirstName());
-        assertEquals(expected.getLastName(), actual.getLastName());
-    }
-
 }
