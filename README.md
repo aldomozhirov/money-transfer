@@ -34,19 +34,18 @@ java -jar money-transfer-app.jar
 
 ### How to run unit tests
 
-##### User controller
+##### REST controllers
 ```sh
 mvn surefire:test -Dtest=UserControllerTest
-```
-
-##### Account controller
-```sh
 mvn surefire:test -Dtest=AccountControllerTest
+mvn surefire:test -Dtest=TransactionControllerTest
 ```
 
-##### Transaction controller
+##### Internal services
 ```sh
-mvn surefire:test -Dtest=TransactionControllerTest
+mvn surefire:test -Dtest=UserServiceTest
+mvn surefire:test -Dtest=AccountServiceTest
+mvn surefire:test -Dtest=TransactionServiceTest
 ```
 
 ### Available Endpoints
