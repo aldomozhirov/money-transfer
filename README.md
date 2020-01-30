@@ -18,7 +18,9 @@ a pre-installed container/server).
 - Maven
 - JUnit 4
 - Jetty Container
-- Apache HTTP Client (for unit tests)
+- Jersey (JAX-RS)
+- Jackson (JSON)
+- Apache HTTP Client (for testing)
 
 ### How to run app
 
