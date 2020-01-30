@@ -8,8 +8,7 @@ public abstract class AbstractServiceTest extends AbstractTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        RepositoryFactory.create();
-        addSampleData(RepositoryFactory.getInstance());
+        addSampleData(RepositoryFactory.create());
     }
 
 }

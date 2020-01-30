@@ -56,12 +56,7 @@ public class MoneyTransferApp {
 
         // Start server
 
-        try {
-            server.start();
-            server.join();
-        } finally {
-            server.destroy();
-        }
+        server.start();
 
     }
 

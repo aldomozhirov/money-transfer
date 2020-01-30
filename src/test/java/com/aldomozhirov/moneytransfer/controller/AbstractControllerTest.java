@@ -2,14 +2,6 @@ package com.aldomozhirov.moneytransfer.controller;
 
 import com.aldomozhirov.moneytransfer.AbstractTest;
 import com.aldomozhirov.moneytransfer.MoneyTransferApp;
-import com.aldomozhirov.moneytransfer.factory.RepositoryFactory;
-import com.aldomozhirov.moneytransfer.dto.Account;
-import com.aldomozhirov.moneytransfer.dto.Transaction;
-import com.aldomozhirov.moneytransfer.dto.User;
-import com.aldomozhirov.moneytransfer.exception.RepositoryException;
-import com.aldomozhirov.moneytransfer.repository.AccountRepository;
-import com.aldomozhirov.moneytransfer.repository.TransactionRepository;
-import com.aldomozhirov.moneytransfer.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -30,7 +22,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public abstract class AbstractControllerTest extends AbstractTest {
-
 
     private static final int PORT = 8080;
     private static PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
